@@ -1,0 +1,48 @@
+import React from 'react';
+import { shallow } from 'enzyme';
+import { useSelector } from 'react-redux';
+import { selectMaster } from 'store/versions';
+import Typography from '#web-components/components/Typography';
+import Master from '../Master';
+
+vi.mock('react-redux', () => {
+  const redux = vi.requireActual('react-redux');
+  return {
+    ...redux,
+    useSelector: vi.fn(),
+    useDispatch: vi.fn(),
+  };
+});
+vi.mock('store/versions', () => {
+  return {
+    selectMaster: vi.fn(),
+  };
+});
+
+vi.mock('hooks/useVersion', () => vi.fn());
+
+vi.mock('#web-components/utils', () => {
+  return {
+    formatUTCDateTime: (str: string) => str,
+  };
+});
+
+const selectFormListMock = selectMaster as unknown as vi.Mock;
+const useSelectorMock = vi.mocked(useSelector);
+
+describe('Master', () => {
+  beforeEach(() => {
+    useSelectorMock.mockImplementation((fn) => fn());
+    selectFormListMock.mockReturnValue({ latestUpdate: '2020-11-30T11:14:49', description: 'description' });
+  });
+
+  it('should render component with latestUpdate date', () => {
+    const wrapper = shallow(<Master />);
+    expect(wrapper.find(Typography).findWhere((n) => n.text().includes('2020-11-30T11:14:49')).length).toBeTruthy();
+  });
+
+  it('should render component with description', () => {
+    const wrapper = shallow(<Master />);
+    expect(wrapper.find(Typography).findWhere((n) => n.text() === 'description').length).toBeTruthy();
+  });
+});

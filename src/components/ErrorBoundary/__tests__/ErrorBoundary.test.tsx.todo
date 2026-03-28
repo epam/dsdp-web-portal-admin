@@ -1,0 +1,41 @@
+import { shallow } from 'enzyme';
+import React from 'react';
+import ErrorLayout from '#web-components/components/Layouts/Error';
+import { defaultCriticalErrorProps } from 'constants/errorProps';
+
+import ErrorBoundary from '../ErrorBoundary';
+
+describe('ErrorBoundary', () => {
+  const t = (key: string) => key;
+  const i18n = {
+    language: 'en',
+    options: { nsSeparator: ':' },
+    t,
+    getResourceBundle: vi.fn(),
+    getFixedT: vi.fn(),
+  };
+  const props = {
+    t,
+    i18n,
+    tReady: vi.fn(),
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } as any;
+
+  it('should render fallback error layout if error occurs', () => {
+    const wrapper = shallow(<ErrorBoundary {...props} error={defaultCriticalErrorProps()} />);
+    wrapper.setState({ hasError: true });
+    expect(wrapper.find(ErrorLayout)).toBeTruthy();
+  });
+  it('should call widow.location.assign if handleBackLinkClick clicked', () => {
+    Object.defineProperty(window, 'location', {
+      value: {
+        assign: vi.fn(),
+        origin: 'someOrigin',
+      },
+    });
+    const Child = () => (<div />);
+    const wrapper = shallow(<ErrorBoundary {...props}><Child /></ErrorBoundary>);
+    wrapper.setState({ hasError: false });
+    expect(wrapper.find(Child)).toBeTruthy();
+  });
+});

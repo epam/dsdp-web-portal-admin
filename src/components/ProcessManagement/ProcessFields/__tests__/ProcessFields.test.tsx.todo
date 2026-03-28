@@ -1,0 +1,47 @@
+import React from 'react';
+import { shallow } from 'enzyme';
+import { Controller, useFormContext } from 'react-hook-form';
+import ProcessFields from '../ProcessFields';
+
+const useFormContextMock = vi.mocked(useFormContext);
+
+vi.mock('react-hook-form', () => {
+  return {
+    ...vi.requireActual('react-hook-form'),
+    useFormContext: vi.fn(),
+  };
+});
+
+describe('ProcessFields', () => {
+  const register = vi.fn();
+  const setValue = vi.fn();
+  const getValues = vi.fn();
+  const watch = vi.fn();
+
+  beforeEach(() => {
+    useFormContextMock.mockReturnValue({
+      register, setValue, getValues, watch, formState: { errors: {} },
+    });
+  });
+
+  it('should render form', () => {
+    watch.mockReturnValue(true);
+    getValues.mockReturnValue({ formSchema: {} });
+    const wrapper = shallow(<ProcessFields className="" />);
+    expect(wrapper.find('form').exists()).toBeTruthy();
+  });
+  it('title should show rule message if mode is not read only', () => {
+    watch.mockReturnValue(true);
+    const wrapper = shallow(<ProcessFields className="" />);
+    const comp = wrapper.find(Controller).first().prop('render')({ field: { name: 'title' } } as any);
+    expect(comp.props.description).toBe('process.text.rule.title');
+  });
+  it('name should show rule message if mode is not read only', () => {
+    watch.mockReturnValue(true);
+    const wrapper = shallow(<ProcessFields className="" />);
+    const comp = wrapper
+      .find(Controller)
+      .findWhere((node) => node.prop('name') === 'name').prop('render')({ field: { name: 'name' } } as any);
+    expect(comp.props.description).toBe('process.text.rule.name');
+  });
+});

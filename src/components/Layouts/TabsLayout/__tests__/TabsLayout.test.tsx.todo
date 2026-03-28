@@ -1,0 +1,35 @@
+import React from 'react';
+import { shallow } from 'enzyme';
+import TabsLayoutHeader from '../components/TabsLayoutHeader';
+
+import TabsLayout from '../TabsLayout';
+
+vi.mock('react-redux', () => {
+  const redux = vi.requireActual('react-redux');
+  return {
+    ...redux,
+    useSelector: vi.fn(),
+    useDispatch: vi.fn(),
+  };
+});
+
+const props = {
+  viewMode: true,
+  onViewModeChange: () => {},
+  submitButtonText: '',
+  cancelButtonText: '',
+  onSubmit: () => {},
+  onCancel: () => {},
+};
+
+describe('TabsLayout', () => {
+  it('should render standard layout if no error is present', () => {
+    const wrapper = shallow(<TabsLayout {...props} title="" entityName="" tabs={[]} />);
+    expect(wrapper.find(TabsLayoutHeader).exists()).toBeTruthy();
+  });
+
+  it('should not render standard layout if error is present', () => {
+    const wrapper = shallow(<TabsLayout {...props} error={{}} title="" entityName="" tabs={[]} />);
+    expect(wrapper.find(TabsLayoutHeader).exists()).toBeFalsy();
+  });
+});

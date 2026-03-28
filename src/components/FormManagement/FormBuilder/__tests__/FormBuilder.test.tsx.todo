@@ -1,0 +1,52 @@
+import React from 'react';
+import { shallow } from 'enzyme';
+import { useFormContext } from 'react-hook-form';
+import FormInvalidJson from 'components/FormManagement/FormInvalidJson';
+import { FormBuilder as FormioFormBuilder } from '#web-components/components/Form';
+
+import FormBuilder from '../FormBuilder';
+
+const useFormContextMock = vi.mocked(useFormContext);
+
+vi.mock('react-hook-form', () => {
+  return {
+    useFormContext: vi.fn(),
+  };
+});
+vi.mock('react-i18next', () => {
+  const i18nReact = vi.requireActual('react-i18next');
+  return {
+    ...i18nReact,
+    useTranslation: () => ({
+      t: vi.fn(),
+      i18n: { getResourceBundle: vi.fn(), getFixedT: vi.fn(), t: vi.fn() },
+    }),
+  };
+});
+
+describe('FormBuilder', () => {
+  const register = vi.fn();
+  const setValue = vi.fn();
+  const getValues = vi.fn();
+
+  beforeEach(() => {
+    getValues.mockReturnValue({ formSchema: {} });
+    useFormContextMock.mockReturnValue({ register, setValue, getValues });
+  });
+
+  it('should correctly change value', () => {
+    const schema = { components: [] };
+    const wrapper = shallow(<FormBuilder />);
+    const formioBuilderProps = wrapper.find(FormioFormBuilder).props() as any;
+
+    formioBuilderProps.onChange(schema);
+
+    expect(setValue).toHaveBeenCalledWith('formSchema', schema);
+  });
+
+  it('should render FormInvalidJson', () => {
+    getValues.mockReturnValue({ formSchema: {}, jsonSchemeIsInValid: true });
+    const wrapper = shallow(<FormBuilder />);
+    expect(wrapper.find(FormInvalidJson).exists()).toBeTruthy();
+  });
+});

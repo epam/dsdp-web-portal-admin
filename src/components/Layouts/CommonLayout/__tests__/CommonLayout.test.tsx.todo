@@ -1,0 +1,33 @@
+import React from 'react';
+import { shallow } from 'enzyme';
+import useVersion from 'hooks/useVersion';
+import NavbarContainer from '#web-components/components/Navbar';
+import CommonLayout from '../CommonLayout';
+
+vi.mock('react-redux', () => {
+  const redux = vi.requireActual('react-redux');
+  return {
+    ...redux,
+    useSelector: vi.fn(),
+    useDispatch: vi.fn(),
+  };
+});
+
+vi.mock('hooks/useVersion', () => vi.fn());
+
+const useVersionMock = vi.mocked(useVersion);
+
+describe('CommonLayout', () => {
+  beforeEach(() => {
+    useVersionMock.mockReturnValue({ versionIsLoading: false });
+  });
+  it('should render standard layout if no error is present', () => {
+    const wrapper = shallow(<CommonLayout title="Title">{}</CommonLayout>);
+    expect(wrapper.find(NavbarContainer).exists()).toBeTruthy();
+  });
+
+  it('should not render standard layout if error is present', () => {
+    const wrapper = shallow(<CommonLayout title="Title" error={{}}>{}</CommonLayout>);
+    expect(wrapper.find(NavbarContainer).exists()).toBeFalsy();
+  });
+});

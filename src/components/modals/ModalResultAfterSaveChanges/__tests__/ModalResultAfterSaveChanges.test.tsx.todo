@@ -1,0 +1,19 @@
+import React from 'react';
+import { shallow } from 'enzyme';
+import Modal from '#web-components/components/Modal';
+import ModalResultAfterSaveChanges from '../ModalResultAfterSaveChanges';
+
+const props = {
+  hasConflicts: false,
+  onClose: vi.fn(),
+  title: 'title',
+  description: 'description',
+  textButton: 'textButton',
+};
+
+describe('ModalResultAfterSaveChanges', () => {
+  it('should render ModalResultAfterSaveChanges component', () => {
+    const wrapper = shallow(<ModalResultAfterSaveChanges {...props} />);
+    expect(wrapper.find(Modal).exists()).toBeTruthy();
+  });
+});

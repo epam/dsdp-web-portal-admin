@@ -1,0 +1,50 @@
+import React from 'react';
+import { shallow } from 'enzyme';
+import Modal from '#web-components/components/Modal';
+import { useSelector } from 'react-redux';
+import useVersion from 'hooks/useVersion';
+import { selectI18nList } from 'store/i18n';
+import ModalEditI18n from '../ModalEditI18n';
+
+const props = {
+  isOpen: true,
+  onOpenChange: vi.fn(),
+  isNewI18n: false,
+  onSubmit: vi.fn(),
+  i18nTitle: '',
+  fileContent: '',
+  setFileContent: vi.fn(),
+};
+
+vi.mock('react-redux', () => {
+  const redux = vi.requireActual('react-redux');
+  return {
+    ...redux,
+    useSelector: vi.fn(),
+    useDispatch: vi.fn(),
+  };
+});
+vi.mock('hooks/useVersion', () => vi.fn());
+vi.mock('store/i18n', () => {
+  return {
+    selectI18nList: vi.fn(),
+    selectI18nByName: vi.fn(),
+  };
+});
+
+const useSelectorMock = vi.mocked(useSelector);
+const useVersionMock = vi.mocked(useVersion);
+const selectI18nListMock = selectI18nList as unknown as vi.Mock;
+
+describe('ModalEditI18n', () => {
+  beforeEach(() => {
+    useSelectorMock.mockImplementation((fn) => fn());
+    useVersionMock.mockReturnValue({ versionId: ':versionId' });
+  });
+
+  it('should render Modal component', () => {
+    selectI18nListMock.mockReturnValue([]);
+    const wrapper = shallow(<ModalEditI18n {...props} />);
+    expect(wrapper.find(Modal).exists()).toBeTruthy();
+  });
+});

@@ -1,0 +1,32 @@
+import { shallow } from 'enzyme';
+import React from 'react';
+
+import IconButton from '#web-components/components/IconButton';
+
+import ProcessTableActions from '../ProcessTableActions';
+
+vi.mock('react-redux', () => {
+  const redux = vi.requireActual('react-redux');
+  return {
+    ...redux,
+    useDispatch: vi.fn(),
+  };
+});
+
+describe('ProcessTableActions', () => {
+  describe('columnDefinitions', () => {
+    it('should render IconButton', () => {
+      const wrapper = shallow(<ProcessTableActions item={{}} list={[]} />);
+
+      expect(wrapper.find(IconButton).exists()).toBeTruthy();
+    });
+  });
+
+  describe('columnDefinitions', () => {
+    it('should not render IconButton', () => {
+      const wrapper = shallow(<ProcessTableActions item={{}} list={[]} readonly />);
+
+      expect(wrapper.find(IconButton).exists()).toBeFalsy();
+    });
+  });
+});

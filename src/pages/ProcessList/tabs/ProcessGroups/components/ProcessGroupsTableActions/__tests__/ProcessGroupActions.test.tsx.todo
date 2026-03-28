@@ -1,0 +1,33 @@
+import { shallow } from 'enzyme';
+import React from 'react';
+
+import PopperButton from '#web-components/components/PopperButton';
+import { EntityGroup } from '#web-components/types/groupedEntity';
+
+import ProcessGroupsTableActions from '../ProcessGroupsTableActions';
+
+vi.mock('react-redux', () => {
+  const redux = vi.requireActual('react-redux');
+  return {
+    ...redux,
+    useDispatch: vi.fn(),
+  };
+});
+
+describe('ProcessGroupsTableActions', () => {
+  describe('columnDefinitions', () => {
+    it('should render PopperButton', () => {
+      const wrapper = shallow(<ProcessGroupsTableActions item={{} as EntityGroup} list={[]} />);
+
+      expect(wrapper.find(PopperButton).exists()).toBeTruthy();
+    });
+  });
+
+  describe('columnDefinitions', () => {
+    it('should not render PopperButton', () => {
+      const wrapper = shallow(<ProcessGroupsTableActions item={{} as EntityGroup} list={[]} readonly />);
+
+      expect(wrapper.find(PopperButton).exists()).toBeFalsy();
+    });
+  });
+});

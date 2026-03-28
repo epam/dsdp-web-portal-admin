@@ -1,0 +1,27 @@
+import React from 'react';
+import { shallow } from 'enzyme';
+import useVersion from 'hooks/useVersion';
+
+import ImportUsersForm from 'components/ImportUsersForm';
+
+import ImportUsersPage from '..';
+
+vi.mock('hooks/useVersion', () => vi.fn());
+
+const useVersionMock = vi.mocked(useVersion);
+
+vi.mock('react-redux', () => {
+  const redux = vi.requireActual('react-redux');
+  return {
+    ...redux,
+    useSelector: vi.fn(),
+  };
+});
+
+describe('ImportUsersPage', () => {
+  it('should render component Sidebar', () => {
+    useVersionMock.mockReturnValue({ versionId: ':versionId' });
+    const wrapper = shallow(<ImportUsersPage />);
+    expect(wrapper.find(ImportUsersForm).exists()).toBeTruthy();
+  });
+});

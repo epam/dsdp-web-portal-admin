@@ -1,0 +1,15 @@
+import React from 'react';
+import { shallow } from 'enzyme';
+
+import SvgUrlImage from '#web-components/components/SvgUrlImage';
+
+import LogoImage from '../LogoImage';
+
+describe('LogoImage', () => {
+  it('should render SvgUrlImage', () => {
+    const wrapper = shallow(
+      <LogoImage />,
+    );
+    expect(wrapper.find(SvgUrlImage).length).toBeTruthy();
+  });
+});

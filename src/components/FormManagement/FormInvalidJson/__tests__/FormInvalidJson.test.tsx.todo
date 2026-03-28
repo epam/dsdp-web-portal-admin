@@ -1,0 +1,11 @@
+import { shallow } from 'enzyme';
+import React from 'react';
+import FlashMessage from '#web-components/components/FlashMessage';
+import FormInvalidJson from '../FormInvalidJson';
+
+describe('FormInvalidJson', () => {
+  it('should render FlashMessage', () => {
+    const wrapper = shallow(<FormInvalidJson />);
+    expect(wrapper.find(FlashMessage).exists()).toBeTruthy();
+  });
+});

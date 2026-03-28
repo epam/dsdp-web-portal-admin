@@ -1,0 +1,40 @@
+import React from 'react';
+import { shallow } from 'enzyme';
+import { useFormContext } from 'react-hook-form';
+import FormInvalidJson from 'components/FormManagement/FormInvalidJson';
+import FormFields from '../FormFields';
+
+const useFormContextMock = vi.mocked(useFormContext);
+
+vi.mock('react-hook-form', () => {
+  return {
+    ...vi.requireActual('react-hook-form'),
+    useFormContext: vi.fn(),
+    useWatch: vi.fn(),
+  };
+});
+
+describe('FormFields', () => {
+  const register = vi.fn();
+  const setValue = vi.fn();
+  const getValues = vi.fn();
+  const watch = vi.fn();
+
+  beforeEach(() => {
+    useFormContextMock.mockReturnValue({
+      control: vi.fn(), register, setValue, getValues, watch, formState: { errors: {} },
+    });
+  });
+
+  it('should render form', () => {
+    getValues.mockReturnValue({ formSchema: {} });
+    const wrapper = shallow(<FormFields className="" />);
+    expect(wrapper.find('form').exists()).toBeTruthy();
+  });
+
+  it('should render FormInvalidJson', () => {
+    getValues.mockReturnValue({ formSchema: {}, jsonSchemeIsInValid: true });
+    const wrapper = shallow(<FormFields className="" />);
+    expect(wrapper.find(FormInvalidJson).exists()).toBeTruthy();
+  });
+});

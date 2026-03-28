@@ -1,0 +1,27 @@
+import React from 'react';
+import { shallow } from 'enzyme';
+import StandardLayout from 'components/Layouts/Standard';
+import { defaultCriticalErrorProps } from 'constants/errorProps';
+import ErrorPage from '../ErrorPage';
+
+vi.mock('react-redux', () => {
+  const redux = vi.requireActual('react-redux');
+  return {
+    ...redux,
+    useDispatch: vi.fn(),
+  };
+});
+
+vi.mock('react-router', () => {
+  return {
+    useLocation: vi.fn(),
+  };
+});
+
+describe('ErrorPage', () => {
+  it('should render StandardLayout component', () => {
+    const wrapper = shallow(<ErrorPage />);
+    expect(wrapper.find(StandardLayout)).toBeTruthy();
+    expect(wrapper.find(StandardLayout).props().error).toEqual(defaultCriticalErrorProps());
+  });
+});

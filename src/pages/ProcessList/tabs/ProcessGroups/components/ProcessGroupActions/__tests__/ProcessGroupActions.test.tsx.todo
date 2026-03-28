@@ -1,0 +1,43 @@
+import { shallow } from 'enzyme';
+import React from 'react';
+import { useSelector } from 'react-redux';
+
+import PopperButton from '#web-components/components/PopperButton';
+import { EntityGroup } from '#web-components/types/groupedEntity';
+
+import ProcessGroupActions from '../ProcessGroupActions';
+
+vi.mock('react-redux', () => {
+  const redux = vi.requireActual('react-redux');
+  return {
+    ...redux,
+    useDispatch: vi.fn(),
+    useSelector: vi.fn(),
+  };
+});
+
+vi.mock('store/processGroups', () => {
+  const redux = vi.requireActual('store/processGroups');
+  return {
+    ...redux,
+    selectGroupDataEdit: () => ({
+      groups: [],
+    }),
+  };
+});
+
+const useSelectorMock = vi.mocked(useSelector);
+
+describe('ProcessGroupActions', () => {
+  beforeEach(() => {
+    useSelectorMock.mockImplementation((fn) => fn());
+  });
+
+  describe('columnDefinitions', () => {
+    it('should render PopperButton', () => {
+      const wrapper = shallow(<ProcessGroupActions item={{} as EntityGroup} unselectGroup={() => {}} />);
+
+      expect(wrapper.find(PopperButton).exists()).toBeTruthy();
+    });
+  });
+});

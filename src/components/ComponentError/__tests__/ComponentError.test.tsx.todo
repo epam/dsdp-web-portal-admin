@@ -1,0 +1,15 @@
+import React from 'react';
+import { shallow } from 'enzyme';
+
+import Typography from '#web-components/components/Typography';
+
+import ComponentError from '..';
+
+describe('ComponentError', () => {
+  it('ComponentError should render Typography', () => {
+    const Icon = () => <div>Icon</div>;
+    const text = 'Error text';
+    const wrapper = shallow(<ComponentError icon={<Icon />} text={text} />);
+    expect(wrapper.find(Typography)).toHaveLength(1);
+  });
+});

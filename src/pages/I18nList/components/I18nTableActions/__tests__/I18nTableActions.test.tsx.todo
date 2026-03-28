@@ -1,0 +1,50 @@
+import { shallow } from 'enzyme';
+import React from 'react';
+import IconButton from '#web-components/components/IconButton';
+import DeleteIcon from '#web-components/assets/icons/delete.svg?react';
+import EditIcon from '#web-components/assets/icons/edit.svg?react';
+import InlineButton from '#web-components/components/InlineButton';
+
+import I18nTableActions from '../I18nTableActions';
+
+describe('I18nTableActions', () => {
+  it('should render component FormTableActions with edit and delete icons', () => {
+    const props = {
+      onCreateClick: () => vi.fn(),
+      onEditClick: () => vi.fn(),
+      onDeleteClick: () => vi.fn(),
+      i18nBundleExists: true,
+      isLoading: false,
+    };
+    const wrapper = shallow(<I18nTableActions {...props} />);
+    expect(wrapper.find(IconButton).exists()).toBeTruthy();
+    expect(wrapper.find(IconButton).length).toBe(2);
+    expect(wrapper.find(DeleteIcon).length).toBe(1);
+    expect(wrapper.find(EditIcon).length).toBe(1);
+  });
+
+  it('should render component FormTableActions with create inline button', () => {
+    const props = {
+      onCreateClick: () => vi.fn(),
+      onEditClick: () => vi.fn(),
+      onDeleteClick: () => vi.fn(),
+      i18nBundleExists: false,
+      isLoading: false,
+    };
+    const wrapper = shallow(<I18nTableActions {...props} />);
+    expect(wrapper.find(InlineButton).exists()).toBeTruthy();
+    expect(wrapper.find(InlineButton).length).toBe(1);
+  });
+
+  it('should render nothing if loading', () => {
+    const props = {
+      onCreateClick: () => vi.fn(),
+      onEditClick: () => vi.fn(),
+      onDeleteClick: () => vi.fn(),
+      i18nBundleExists: false,
+      isLoading: true,
+    };
+    const wrapper = shallow(<I18nTableActions {...props} />);
+    expect(wrapper.find(InlineButton).exists()).toBeFalsy();
+  });
+});

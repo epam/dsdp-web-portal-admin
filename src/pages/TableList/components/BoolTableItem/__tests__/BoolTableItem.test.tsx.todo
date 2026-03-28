@@ -1,0 +1,15 @@
+import { shallow } from 'enzyme';
+import React from 'react';
+import { DoneIcon } from '#web-components/components/Icons';
+import BoolTableItem from '../BoolTableItem';
+
+describe('BoolTableItem', () => {
+  it('should render DoneIcon if value === true', () => {
+    const wrapper = shallow(<BoolTableItem value />);
+    expect(wrapper.find(DoneIcon).exists()).toBeTruthy();
+  });
+  it('should render "-" if value === false', () => {
+    const wrapper = shallow(<BoolTableItem value={false} />);
+    expect(wrapper.text()).toEqual('-');
+  });
+});

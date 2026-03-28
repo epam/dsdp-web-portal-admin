@@ -1,0 +1,31 @@
+import { shallow } from 'enzyme';
+import useAuthentication from 'hooks/useAuthentication';
+import useQuery from 'hooks/useQuery';
+import React from 'react';
+import { Redirect } from 'react-router';
+
+import LoginPage from '../LoginPage';
+
+vi.mock('hooks/useAuthentication', () => vi.fn());
+vi.mock('hooks/useQuery', () => vi.fn());
+
+const useAuthenticationMock = vi.mocked(useAuthentication);
+const useQueryMock = vi.mocked(useQuery);
+
+describe('LoginPage', () => {
+  it('Redirect should be rendered if user already authenticated', () => {
+    useAuthenticationMock.mockReturnValue({ authenticated: true });
+    useQueryMock.mockReturnValue({ has: () => false });
+    const wrapper = shallow(<LoginPage />);
+    const redirect = wrapper.find(Redirect);
+    expect(redirect.props()).toMatchObject({ to: '/' });
+  });
+
+  it('should call logout rendered if user already authenticated', () => {
+    useAuthenticationMock.mockReturnValue({ authenticated: true, logout: vi.mock });
+    useQueryMock.mockReturnValue({ has: () => true });
+    const spy = vi.spyOn(useAuthentication(), 'logout');
+    shallow(<LoginPage />);
+    expect(spy).toHaveBeenCalled();
+  });
+});

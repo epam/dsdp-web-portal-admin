@@ -1,0 +1,27 @@
+import React from 'react';
+import { shallow } from 'enzyme';
+import useVersion from 'hooks/useVersion';
+import { MASTER_VERSION_ID } from 'constants/common';
+import HomePage from '../HomePage';
+import Master from '../components/Master';
+
+vi.mock('react-redux', () => {
+  const redux = vi.requireActual('react-redux');
+  return {
+    ...redux,
+    useSelector: vi.fn(),
+    useDispatch: vi.fn(),
+  };
+});
+
+vi.mock('hooks/useVersion', () => vi.fn());
+
+const useVersionMock = vi.mocked(useVersion);
+
+describe('HomePage', () => {
+  it('should render Master component', () => {
+    useVersionMock.mockReturnValue({ versionId: MASTER_VERSION_ID });
+    const wrapper = shallow(<HomePage />);
+    expect(wrapper.find(Master).exists()).toBeTruthy();
+  });
+});

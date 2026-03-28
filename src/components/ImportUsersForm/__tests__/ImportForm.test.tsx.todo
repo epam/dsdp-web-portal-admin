@@ -1,0 +1,224 @@
+import { shallow } from 'enzyme';
+import React, { useState } from 'react';
+import { useDropzone } from 'react-dropzone';
+import { sendImportFileClean, startImportRequest, deleteImportFileRequest } from 'store/users/slice';
+import { useDispatch, useSelector } from 'react-redux';
+import { X_PATH } from 'constants/xPath';
+import useVersion from 'hooks/useVersion';
+import IconButton from '#web-components/components/IconButton';
+import ImportForm from '..';
+
+const selectImportUsersFileInfo = {
+  id: '1',
+  name: 'name',
+  size: 1,
+};
+
+vi.mock('hooks/useVersion', () => vi.fn());
+vi.mock('react', () => {
+  const react = vi.requireActual('react');
+  return {
+    ...react,
+    useState: vi.fn(),
+  };
+});
+vi.mock('react-redux', () => {
+  const redux = vi.requireActual('react-redux');
+  return {
+    ...redux,
+    useSelector: vi.fn(),
+    useDispatch: vi.fn(),
+  };
+});
+vi.mock('store/users/selectors', () => {
+  return {
+    selectDropzoneError: vi.fn(),
+    selectDropzoneIsLoading: vi.fn(),
+    selectImportUsersFileInfo,
+  };
+});
+vi.mock('react-dropzone', () => {
+  return {
+    useDropzone: vi.fn(),
+  };
+});
+
+const useDropzoneMock = vi.mocked(useDropzone);
+const useDispatchMock = vi.mocked(useDispatch);
+const useStateMock = vi.mocked(useState);
+const useSelectorMock = vi.mocked(useSelector);
+const useVersionMock = vi.mocked(useVersion);
+
+describe('ImportForm', () => {
+  beforeEach(() => {
+    useSelectorMock.mockImplementation((fn) => fn);
+    useVersionMock.mockReturnValue({ versionId: ':versionId' });
+  });
+  it('should call useDropzone', () => {
+    const dispatch = vi.fn();
+    const setter = vi.fn();
+    useStateMock.mockReturnValue([null, setter]);
+    useDispatchMock.mockReturnValue(dispatch);
+    useDropzoneMock.mockReturnValue({
+      getRootProps: () => ({}),
+      getInputProps: () => ({}),
+    });
+    shallow(<ImportForm />);
+    expect(useDropzoneMock).toBeCalled();
+  });
+  it('should start import', () => {
+    const dispatch = vi.fn();
+    const setter = vi.fn();
+    useStateMock.mockReturnValue([null, setter]);
+    useDispatchMock.mockReturnValue(dispatch);
+    useDropzoneMock.mockReturnValue({
+      getRootProps: () => ({}),
+      getInputProps: () => ({}),
+    });
+    const wrapper = shallow(<ImportForm />);
+    const exportItem = wrapper
+      .find({ 'data-xpath': X_PATH.startImportButton });
+    const onClick = exportItem.prop('onClick');
+
+    if (onClick) {
+      onClick({} as any);
+    }
+
+    expect(dispatch).toBeCalledWith(startImportRequest({ versionId: ':versionId' }));
+  });
+
+  interface fileType {
+    size: number;
+    name: string;
+    type: string;
+  }
+
+  it('should call sendImportFileClean', () => {
+    const dispatch = vi.fn();
+    const setter = vi.fn();
+    useStateMock.mockReturnValue([null, setter]);
+    const file = { size: 0, name: '', type: '' };
+    let onDropFunc = ([fileOnDrop]: fileType[]) => fileOnDrop;
+    useDispatchMock.mockReturnValue(dispatch);
+    useDropzoneMock.mockImplementation(({ onDrop }) => {
+      onDropFunc = onDrop;
+
+      return ({
+        getRootProps: () => ({}),
+        getInputProps: () => ({}),
+      });
+    });
+    shallow(<ImportForm />);
+
+    if (onDropFunc) {
+      onDropFunc([file]);
+    }
+
+    expect(dispatch).toBeCalledWith(sendImportFileClean());
+  });
+
+  it('should show tooBigFileSize message', () => {
+    const dispatch = vi.fn();
+    const file = { size: 104857600, name: '', type: '' };
+    const setter = vi.fn();
+    let onDropFunc = ([fileOnDrop]: fileType[]) => fileOnDrop;
+    useDispatchMock.mockReturnValue(dispatch);
+    useStateMock.mockReturnValue([null, setter]);
+    useDropzoneMock.mockImplementation(({ onDrop }) => {
+      onDropFunc = onDrop;
+
+      return ({
+        getRootProps: () => ({}),
+        getInputProps: () => ({}),
+      });
+    });
+    shallow(<ImportForm />);
+
+    if (onDropFunc) {
+      onDropFunc([file]);
+    }
+
+    expect(setter).toBeCalledWith('text.tooBigFileSize');
+  });
+
+  it('should show invalidFileType message', () => {
+    const dispatch = vi.fn();
+    const file = { size: 0, name: '', type: '' };
+    const setter = vi.fn();
+    let onDropFunc = ([fileOnDrop]: fileType[]) => fileOnDrop;
+    useDispatchMock.mockReturnValue(dispatch);
+    useStateMock.mockReturnValue([null, setter]);
+    useDropzoneMock.mockImplementation(({ onDrop }) => {
+      onDropFunc = onDrop;
+
+      return ({
+        getRootProps: () => ({}),
+        getInputProps: () => ({}),
+      });
+    });
+    shallow(<ImportForm />);
+
+    if (onDropFunc) {
+      onDropFunc([file]);
+    }
+
+    expect(setter).toBeCalledWith('text.invalidFileType');
+  });
+
+  it('should call sendImportFileRequest', () => {
+    const dispatch = vi.fn();
+    const setter = vi.fn();
+    useStateMock.mockReturnValue([null, setter]);
+    const file = { size: 1, name: 'name', type: 'text/csv' };
+    vi.spyOn(global, 'FormData')
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      .mockImplementationOnce(() => ({
+        append: () => file,
+      }));
+    let onDropFunc = ([fileOnDrop]: fileType[]) => fileOnDrop;
+    useDispatchMock.mockReturnValue(dispatch);
+    useDropzoneMock.mockImplementation(({ onDrop }) => {
+      onDropFunc = onDrop;
+
+      return ({
+        getRootProps: () => ({}),
+        getInputProps: () => ({}),
+      });
+    });
+    shallow(<ImportForm />);
+
+    if (onDropFunc) {
+      onDropFunc([file]);
+    }
+
+    expect(setter).toBeCalledWith({ name: 'name', size: '<1' });
+    expect(dispatch.mock.calls.length).toBe(2);
+  });
+
+  it('should delete file', () => {
+    const dispatch = vi.fn();
+    const setter = vi.fn();
+    useStateMock.mockReturnValue([null, setter]);
+    useDispatchMock.mockReturnValue(dispatch);
+    useDropzoneMock.mockReturnValue({
+      getRootProps: () => ({}),
+      getInputProps: () => ({}),
+    });
+
+    const wrapper = shallow(<ImportForm />);
+    expect(wrapper.find(IconButton).exists()).toBeTruthy();
+
+    const closeButton = wrapper
+      .find(IconButton);
+    const onClick = closeButton.prop('onClick');
+
+    if (onClick) {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      onClick({});
+    }
+
+    expect(dispatch).toHaveBeenCalledWith(deleteImportFileRequest(selectImportUsersFileInfo.id));
+  });
+});

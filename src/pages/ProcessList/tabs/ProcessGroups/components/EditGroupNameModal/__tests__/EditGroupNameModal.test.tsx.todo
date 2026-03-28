@@ -1,0 +1,24 @@
+import { shallow } from 'enzyme';
+import React from 'react';
+import Modal from '#web-components/components/Modal';
+
+import EditGroupNameModal from '../EditGroupNameModal';
+
+describe('EditGroupNameModal', () => {
+  const props = {
+    existingGroupNames: [],
+    isOpen: true,
+    process: { id: 'id', name: 'name' },
+    onOpenChange: () => vi.fn(),
+    onSubmit: () => vi.fn(),
+    text: {
+      title: 'string',
+      groupFieldLabel: 'string',
+      addButtonLabel: 'string',
+    },
+  };
+  it('should render component EditGroupNameModal', () => {
+    const wrapper = shallow(<EditGroupNameModal {...props} />);
+    expect(wrapper.find(Modal)).toBeTruthy();
+  });
+});

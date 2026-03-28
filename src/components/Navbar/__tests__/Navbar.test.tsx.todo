@@ -1,0 +1,19 @@
+import React from 'react';
+import { shallow } from 'enzyme';
+import useVersion from 'hooks/useVersion';
+import LogoLink from '#web-components/components/Navbar/components/LogoLink';
+import Navbar from '../Navbar';
+
+vi.mock('hooks/useVersion', () => vi.fn());
+
+const useVersionMock = vi.mocked(useVersion);
+
+describe('Navbar', () => {
+  beforeEach(() => {
+    useVersionMock.mockReturnValue({ versionId: ':versionId' });
+  });
+  it('should contain a link to home page', () => {
+    const wrapper = shallow(<Navbar />);
+    expect(wrapper.find(LogoLink).exists()).toBeTruthy();
+  });
+});

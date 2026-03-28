@@ -1,0 +1,40 @@
+import { mount } from 'enzyme';
+import React from 'react';
+import { Controller, useFormContext } from 'react-hook-form';
+import Input from '#web-components/components/FormControls/Input';
+import ProcessCode from '../ProcessCode';
+
+vi.mock('react-hook-form', () => {
+  const hookForm = vi.requireActual('react-hook-form');
+  return {
+    ...hookForm,
+    useFormContext: vi.fn(),
+    Controller: vi.fn(),
+  };
+});
+
+vi.mock('@material-ui/core', () => ({
+  ...vi.requireActual('@material-ui/core'),
+  useMediaQuery: vi.fn(),
+}));
+
+const useFormContextMock = vi.mocked(useFormContext);
+const ControllerMock = vi.mocked(Controller);
+
+describe('ProcessCode', () => {
+  beforeEach(() => {
+    useFormContextMock.mockReturnValue({
+      setValue: vi.fn(),
+      control: vi.fn(),
+      watch: vi.fn(),
+    });
+  });
+  it('should render Input', () => {
+    ControllerMock.mockImplementation(({ render: controllerRender }) => {
+      const Component = controllerRender({ field: { name: 'gggggg' } });
+      return Component;
+    });
+    const wrapper = mount(<ProcessCode />);
+    expect(wrapper.find(Input).exists()).toBeTruthy();
+  });
+});

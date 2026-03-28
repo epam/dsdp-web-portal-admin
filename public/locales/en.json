@@ -1,0 +1,1086 @@
+{
+  "text": {
+    "appTitle": "Digital Services Development Platform",
+    "processingRequest": "Processing the request...",
+    "hintSection": "This section does not depend on the selected version of the regulations. Any changes apply to all versions of the regulations (including the master version).",
+    "metaTags": {
+      "title": "Digital services development",
+      "description": "Digital services development"
+    }
+  },
+  "errors": {
+    "notFound": {
+      "message": "Page not found",
+      "description": "The webpage you're looking for cannot be found. Please check the URL or try a different one."
+    },
+    "rateLimit": {
+      "description": "Sorry, the number of completed requests exceeded. Please refresh the page or try again later."
+    },
+    "form": {
+      "fieldIsRequired": "Required field",
+      "invalidCharacters": "The value contains invalid characters.",
+      "invalidField": "Check the field format.",
+      "emailPattern": "The email address must be in the \"test@example.com\" format.",
+      "emailBlackListError": "This email address cannot be used due to security policy.",
+      "invalidEmail": "Check the email address",
+      "invalidForm": "Please check required fields format",
+      "roleAlreadyExists": "The role already exists"
+    },
+    "notification": {
+      "default": {
+        "title": "Sorry, something went wrong.",
+        "message": "Please refresh the page."
+      },
+      "tryAgain": {
+        "message": "Please try again."
+      },
+      "helpButton": "Need help?",
+      "errorModal": {
+        "text": {
+          "title": "How to contact technical support?",
+          "writeMail": "Please write a mail to:",
+          "copyTraceId": "Copy the following information to your message:",
+          "emptySupportEmail": "Email address is missing.",
+          "emptyTraceId": "Missing Error Trace ID.",
+          "description": "To help us resolve the issue faster, please provide additional details: what page the error occurred on, what steps you took, etc.",
+          "thanks": "Thanks for helping us become better!"
+        }
+      }
+    },
+    "forbidden": {
+      "message": "Access denied",
+      "description": "Please contact the administrator to check your permissions.",
+      "backToStart": "Back to Login page"
+    },
+    "invalidComponentValue": "You've entered a value in Data «{invalidValue}» that we don't recognize. Supported values «{value}»."
+  },
+  "actions": {
+    "delete": "Delete",
+    "rename": "Rename",
+    "close": "Close",
+    "goToEditingMode": "Go to editing mode"
+  },
+  "components": {
+    "header": {
+      "actions": {
+        "logout": "Logout"
+      }
+    },
+    "formLayout": {
+      "editModeSwitch": "Preview",
+      "tabs": {
+        "common": "General",
+        "code": "Code",
+        "modeler": "Builder",
+        "preview": "Preview",
+        "query": "Request"
+      },
+      "tabsContent": {
+        "queryTitle": "Form request"
+      }
+    },
+    "processLayout": {
+      "tabs": {
+        "common": "General",
+        "code": "Code",
+        "modeler": "Builder"
+      }
+    },
+    "tableLayout": {
+      "tabs": {
+        "common": "General",
+        "columns": "Columns",
+        "indexes": "Indexes"
+      }
+    },
+    "errorLayout": {
+      "text": {
+        "errorTitle": "Error :(",
+        "reloadPageAndContactAdministrator": "Please refresh the page. If the error persists, contact an administrator.",
+        "reloadPage": "Reload page",
+        "smthWentWrong": "Sorry, something went wrong.",
+        "backToHome": "Back to Main page"
+      }
+    },
+    "table": {
+      "perPage": "Displayed rows",
+      "pagination": "{{from}}-{{to}} of {{count}}",
+      "paginationNoCount": "Rows {{from}}-{{to}}",
+      "aria": {
+        "firstPage": "First page",
+        "lastPage": "Last page",
+        "nextPage": "Next page",
+        "prevPage": "Previous page"
+      }
+    },
+    "nav": {
+      "settings": "Settings",
+      "mailSettings": "Email settings",
+      "regulationVersionManagement": "Version management",
+      "versionOverview": "Version overview",
+      "organizationalStructure": "Organizational structure",
+      "userManagement": "User management",
+      "modelingRegulations": "Service modeling",
+      "formUI": "UI forms",
+      "tables": "Tables",
+      "reportTemplates": "Report templates",
+      "bpModels": "Process models",
+      "businessProcesses": "Business processes",
+      "translationManagement": "Translation management",
+      "regulationTranslations": "Service translations"
+    },
+    "versionMenu": {
+      "text": {
+        "masterVersion": "Master version",
+        "versionRequest": "My change requests",
+        "anyVersion": "No change requests have been created yet."
+      },
+      "actions": {
+        "create": "Create new request"
+      }
+    },
+    "modal": {
+      "createCandidateVersion": {
+        "text": {
+          "createNewRequest": "Create new request",
+          "createNewRequestDescription": "This action creates a change request to modify the master version of the service configuration."
+        },
+        "fields": {
+          "versionName": "Version name",
+          "versionNamePlaceholder": "Example: version-candidate-01.",
+          "versionNameRule": "Length: 3-32 characters. Allowed \"a-z\", 0-9, \"-\".",
+          "descriptionOfChange": "Description of change",
+          "descriptionOfChangePlaceholder": "What changes are suggested in this version?",
+          "descriptionOfChangeRule": "Length up to 512 characters. All characters are allowed except \" (double quotes), use ' (single quotes) instead."
+        },
+        "actions": {
+          "cancel": "Cancel",
+          "create": "Create"
+        }
+      },
+      "whereToSaveChanges": {
+        "text": {
+          "title": "Where to save changes?",
+          "descriptionCreateForm": "You can continue creating the form in the master version or to create a new candidate version.",
+          "descriptionEditForm": "You can continue editing the form in the master version or create a new candidate version",
+          "descriptionDeleteForm": "You can continue deleting the form in the master version or to create a new candidate version.",
+          "descriptionCreateProcess": "You can continue creating the business process in the master version or to create a new candidate version.",
+          "descriptionDeleteProcess": "You can continue deleting the business process in the master version or to create a new candidate version.",
+          "descriptionEditProcess": "You can continue editing the business process in the master version or to create a new candidate version.",
+          "descriptionCreateI18n": "You can continue creating the localization bundle in the master version or to create a new candidate version.",
+          "descriptionEditI18n": "You can continue editing the localization bundle in the master version or to create a new candidate version.",
+          "descriptionDeleteI18n": "You can continue deleting the localization bundle in the master version or to create a new candidate version."
+        },
+        "actions": {
+          "createCandidateVersion": "Create candidate version",
+          "continueMasterVersion": "Continue in master version",
+          "cancel": "Cancel"
+        }
+      },
+      "nonConflicts": {
+        "text": {
+          "title": "Changes accepted",
+          "description": "Applying the changes will take a few minutes. You can continue working with other components of the master version.",
+          "button": "Understood"
+        }
+      },
+      "conflict": {
+        "title": "Unable to apply changes"
+      },
+      "conflictDeleteForm": {
+        "descriptionMaster": "This form has been updated in the master version. You need to refresh the page first to remove it.",
+        "descriptionCandidate": "This form has been updated in the current candidate version. To remove it, you must refresh the page first.",
+        "textButton": "Understood"
+      },
+      "conflictEditI18n": {
+        "descriptionMaster": "This localization bundle has been updated in the master version. To avoid losing your work, we recommend you copy the code, reopen edit popup, and edit it again.",
+        "descriptionCandidate": "This localization bundle has been updated in the current candidate version. To avoid losing your work, we recommend you copy the code, reopen edit popup, and edit it again.",
+        "textButton": "Understood"
+      },
+      "conflictDeleteI18n": {
+        "descriptionMaster": "This localization bundle has been updated in the master version. You need to refresh the page first to remove it.",
+        "descriptionCandidate": "This localization bundle has been updated in the current candidate version. To remove it, you must refresh the page first.",
+        "textButton": "Understood"
+      },
+      "conflictDeleteProcess": {
+        "descriptionMaster": "This business process has been updated in the master version. You need to refresh the page first to remove it.",
+        "descriptionCandidate": "This business process has been updated in the current candidate version. You need to refresh the page first to remove it.",
+        "textButton": "Understood"
+      }
+    },
+    "formBuilder": {
+      "text": {
+        "basicComponentsListTitle": "Components",
+        "experimentalComponentsListTitle": "Experimental",
+        "legacyComponentsListTitle": "Legacy",
+        "latestComponentsListTitle": "Latest",
+        "autocompleteDescription": "It is advisable not to enable autocomplete for fields containing sensitive data. To ensure the data is not sensitive, consult the data model administrator."
+      }
+    },
+    "candidateChanges": {
+      "changedForms": "Business process forms",
+      "changedBusinessProcesses": "Business process models",
+      "changedDataModelFiles": "Structure the database tables",
+      "changedGroups": "Display in user portals",
+      "changedI18nFiles": "Registry translations",
+      "changedGlobalConfigurationFiles": "Email settings",
+      "notifications": {
+        "revertSuccessful": "Changes to {{name}} have been successfully reverted."
+      },
+      "table": {
+        "emptyPlaceholder": "No changes have been implemented so far.",
+        "columns": {
+          "name": {
+            "changedForms": "Business process form name",
+            "changedBusinessProcesses": "Business process name",
+            "changedGroups": "File name",
+            "changedDataModelFiles": "File name",
+            "changedI18nFiles": "Translation language",
+            "changedGlobalConfigurationFiles": "Global settings file name" 
+          },
+          "conflict": {
+            "okTooltip": "No conflicts found",
+            "conflictTooltip": "Conflicts found"
+          },
+          "revert": {
+            "buttonTitle": "Revert to the last updated candidate version state"
+          },
+          "status": "Status"
+        },
+        "values": {
+          "status": {
+            "NEW": "Added",
+            "CHANGED": "Changed",
+            "DELETED": "Deleted"
+          },
+          "name": {
+            "createTables": "Data model table structure description file"
+          }
+        }
+      },
+      "modals": {
+        "revertConfirm": {
+          "title": "Undo changes?",
+          "description": "The selected component of the service configuration will be reverted to its last updated state in the candidate version.",
+          "confirm": "Yes, cancel",
+          "cancel": "No, leave"
+        }
+      }
+    }
+  },
+  "domains": {
+    "form": {
+      "fields": {
+        "businessName": "Form business name",
+        "businessTitle": "Form service name",
+        "type": "Form type",
+        "roles": "Roles",
+        "showOnCardList": "Show on list of cards",
+        "addRole": "Add role",
+        "enterRoleName": "Enter a role name"
+      },
+      "text": {
+        "rule": "Must be unique within the registry tenant. Allowed characters: Latin letters, numbers, \" - \" and \" - \" is not allowed at the beginning or at the end of the service name."
+      },
+      "notifications": {
+        "success": {
+          "createForm": {
+            "message": "The form \"{{title}}\" has been created successfully!"
+          },
+          "deleteForm": {
+            "message": "The form \"{{title}}\" has been successfully deleted!"
+          },
+          "updateForm": {
+            "message": "Changes to the form have been successfully saved!"
+          }
+        },
+        "error": {
+          "uniqueName": {
+            "title": "Non-unique service name of the form",
+            "message": "Please enter a unique form system name not already used by other registry forms."
+          }
+        }
+      },
+      "validation": {
+        "wrongJson": {
+          "title": "Caution!",
+          "message": "JSON representation contains errors."
+        },
+        "wrongUnique": {
+          "title": "Caution!",
+          "message": "Component API keys are not unique."
+        }
+      }
+    },
+    "i18n": {
+      "notifications": {
+        "success": {
+          "deleteI18n": {
+            "message": "The localization bundle \"{{title}}\" has been successfully deleted!"
+          },
+          "updateI18n": {
+            "message": "Changes to the localization bundle have been successfully saved!"
+          },
+          "createI18n": {
+            "message": "The localization bundle \"{{title}}\" has been created successfully!"
+          }
+        },
+        "error": {
+          "conflict": {
+            "title": "Localization bundle already exists"
+          }
+        }
+      }
+    },
+    "process": {
+      "fields": {
+        "businessName": "Business process service name",
+        "businessTitle": "Process business name",
+        "processCode": "Business process code"
+      },
+      "notifications": {
+        "success": {
+          "updateProcess": {
+            "message": "Business process \"{{title}}\" has been saved successfully."
+          },
+          "createProcess": {
+            "message": "Business process \"{{title}}\" has been created successfully."
+          },
+          "deleteProcess": {
+            "message": "Business process \"{{title}}\" has been deleted successfully."
+          }
+        }
+      },
+      "text": {
+        "rule": {
+          "name": "The name must be unique within the registry instance and contain 3-50 characters. Permissible characters include lowercase 'a-z', uppercase 'A-Z', numbers '0-9', hyphens '-', and underscores '_'. Note: Numbers and hyphens cannot be used at the beginning or end of the name.",
+          "title": "The title can contain 3 to 100 characters. Permissible characters include uppercase 'A-Z', lowercase 'a-z', numbers '0-9', hyphens '-', underscores '_', a comma ',', periods '.', apostrophe ('), and spaces."
+        },
+        "editScript": "Edit script",
+        "viewScript": "View Script",
+        "saveScript": "Save script?",
+        "scriptContainsErrors": "The script code may contain errors. You can save the script but the business process may not run.",
+        "continueEditing": "Continue editing",
+        "lostInternetConnection": "Internet connection has been lost. Please check the connection.",
+        "save": "Confirm",
+        "close": "Close"
+      },
+      "actions": {
+        "save": "Confirm",
+        "close": "Close"
+      },
+      "validation": {
+        "wrongXml": {
+          "title": "Caution!",
+          "message": "The XML representation of the business process contains errors."
+        }
+      }
+    },
+    "registry": {
+      "common": {
+        "name": "Name",
+        "description": "Description",
+        "objectReference": "Subjectivity"
+      },
+      "table": {
+        "columns": {
+          "name": "Column",
+          "type": "Type",
+          "defaultValue": "Default value"
+        },
+        "emptyPlaceholder": ""
+      },
+      "tableIndexes": {
+        "columns": {
+          "name": "Name",
+          "rule": "Rule"
+        },
+        "emptyPlaceholder": "No indexes have been configured for this table."
+      }
+    }
+  },
+  "pages": {
+    "userList": {
+      "title": "User management",
+      "text": {
+        "addUsersRegistry": "Add registry users",
+        "description": "You can download a file containing the data of registered officers for automatic integration into the user management system and assign them access rights.",
+        "lookingResult": "You can review the outcomes of the import process and any potential errors in the technical logs.",
+        "kibanaService": "via the link"
+      },
+      "actions": {
+        "addUsers": "Add users"
+      }
+    },
+    "tableList": {
+      "title": "Tables",
+      "text": {
+        "tableList": "List of tables",
+        "structureDescriptionFile": "Structure description file",
+        "currentChangesAreCancelled": "Current changes have been canceled.",
+        "undoChangesText": "Are you sure you want to cancel the changes?",
+        "undoChanges": "Undo changes",
+        "leavePage": "Leave page?",
+        "leave": "Leave",
+        "stay": "Stay",
+        "fileWasChanged": "The structure description file has been modified. If you leave this page now, any unsaved changes will be lost.",
+        "currentChangesSavedSuccessfully": "The current changes have been saved successfully."
+      },
+      "fields": {
+        "searchLabel": "Search by name",
+        "searchPlaceholder": "Enter the name of the table"
+      },
+      "table": {
+        "emptyPlaceholder": "No tables have been modeled yet.",
+        "emptyPlaceholderCandidates": "There may be currently no existing tables in the database. Please also check the status of the temporary DB deployment in the Version Overview.",
+        "columns": {
+          "name": "Table name",
+          "objectReference": "Entity",
+          "description": "Description"
+        }
+      },
+      "actions": {
+        "saveChanges": "Save changes",
+        "undoChanges": "Undo changes",
+        "collapse": "Collapse",
+        "continueEditing": "Continue editing",
+        "expand": "Expand"
+      },
+      "error": {
+        "notFound": "The file describing the data model structures was not found. Please verify the data model configuration of the Digital Services.",
+        "server": "We apologize. Something went wrong. Please refresh the page."
+      }
+    },
+    "reportList": {
+      "title": "Modeled reports",
+      "fields": {
+        "searchLabel": "Search by name",
+        "searchPlaceholder": "Enter report name"
+      },
+      "table": {
+        "emptyPlaceholder": "No reports have been modeled yet.",
+        "columns": {
+          "id": "ID",
+          "name": "Report name",
+          "slug": "Service name",
+          "created": "Created",
+          "updated": "Last modified"
+        }
+      }
+    },
+    "processList": {
+      "title": "Process models",
+      "fields": {
+        "searchLabel": "Search by name",
+        "searchPlaceholder": "Enter process name"
+      },
+      "table": {
+        "createProcess": "Create new process",
+        "emptyPlaceholder": "No business processes have been modeled yet.",
+        "columns": {
+          "name": "BP name",
+          "serviceName": "Service name",
+          "created": "Created",
+          "modified": "Last modified"
+        }
+      },
+      "error": {
+        "server": "We apologize. Something went wrong. Please refresh the page.",
+        "wrongStructure": "Sorry, the configuration file content is improperly structured or corrupted."
+      },
+      "tabs": {
+        "all": "List of business processes",
+        "groups": "Display in user portals"
+      },
+      "processGroupsTab": {
+        "createGroup": "Create group",
+        "reference": "Help",
+        "save": "Save changes",
+        "cancel": "Undo changes",
+        "groupsTitle": "Groups",
+        "ungroupsTitle": "Services",
+        "emptyGroupsPlaceholder": "No business processes have been modeled yet.",
+        "emptyCurrentGroupPlaceholder": "There are no available services in the group. Empty groups are not displayed in user portals.",
+        "messages": {
+          "saveSuccess": "Current changes saved successfully.",
+          "saveError": "Please check the contents of the file and try again.",
+          "saveErrorTitle": "Sorry, validation failed.",
+          "cancelSuccess": "Current changes canceled."
+        },
+        "controls": {
+          "addGroup": "Add group"
+        }
+      },
+      "modals": {
+        "groupName": {
+          "addTitle": "Create group",
+          "addLabel": "New group name",
+          "addSubmitButton": "Create",
+          "editTitle": "Rename group",
+          "editSubmitButton": "Confirm",
+          "editLabel": "Group name",
+          "cancelButton": "Cancel",
+          "existsError": "A group with this name already exists. Please enter another name.",
+          "description": "Can have from 3 to 512 characters. Valid characters: \"A-Z\", \"a-z\", space, dash, hyphen, \"()\", \"/\" ,\":\", \";\", \",,\", \".\", \"No.\", numbers 0-9.",
+          "placeholder": "Enter group name"
+        },
+        "deleteConfirmation": {
+          "confirmTitle": "Delete group?",
+          "confirmText": "The business processes of the group \"{{groupName}}\" will be moved to the list of ungrouped services.",
+          "cancel": "No, leave",
+          "approve": "Yes, delete"
+        },
+        "information": {
+          "title": "Display in user portals",
+          "description": "You can group business processes, sort groups, and available services for display in user portals. Users will only see the services to which they have access. A group will only be displayed if its business processes are available to the user.",
+          "closeButton": "Understood!"
+        },
+        "cancelChanges": {
+          "title": "Undo changes?",
+          "description": "The service display will return to the last saved state.",
+          "confirm": "Undo changes",
+          "cancel": "Continue editing"
+        },
+        "navigationConfirm": {
+          "title": "Leave page?",
+          "text": "Service display order has been changed. Leaving the page now will discard any unsaved changes.",
+          "ok": "Leave",
+          "cancel": "Stay"
+        },
+        "moveProcess": {
+          "moveTitle": "Move business process",
+          "moveDescription": "Move the business process \"{{processName}}\" to another group or remove it from the current one? It will be added to the end of the selected business process list.",
+          "moveLabel": "Move to",
+          "addLabel": "New group name",
+          "moveSubmitButton": "Confirm",
+          "placeholder": "Select an action from the list",
+          "existingGroupNames": "Existing groups",
+          "moveToNewGroup": "Move to new group",
+          "excludeFromGroup": "Exclude from group"
+        }
+      }
+    },
+    "login": {
+      "title": "Digital Services Development Platform",
+      "text": {
+        "caption": "A portal for designing and configuring digital services. Create and manage business processes, UI forms, and service configuration.",
+        "buttonLabel": "Log in"
+      }
+    },
+    "importUsers": {
+      "title": "Add registry users",
+      "text": {
+        "navTitle": "To User management",
+        "inconsistency": "The attribute values in the file <strong>must</strong> match those in the Qualified Electronic Signature (QES) issued by the organization for work with the registry. Otherwise, users cannot log into the Officer Portal or sign tasks with a QES.",
+        "fileFormat": "File format",
+        "fileFormatCsv": "The .csv file must meet the specified format.",
+        "fileNameCsv": "Users_Upload.csv",
+        "fileNamePdf": "Instructions for filling out Users_Upload.pdf",
+        "explanation": "Instructions for filling the 'Users Keycloak' table",
+        "loadOfficials": "Upload officers list:",
+        "file": "File",
+        "size": "Size",
+        "dropZoneText": "Drag and drop a file here or",
+        "dropZoneSelectFile": "select it from your device",
+        "fileFormatSize": "Supported format: CSV (UTF8). Maximum file size: 30 MB",
+        "uploadingFile": "Uploading file",
+        "fileAccepted": "File accepted for processing.",
+        "checkResult": "You can check the results of the import process and any errors in the technical logs.",
+        "byLink": "via the link",
+        "kibanaLink": "Kibana service",
+        "tooBigFileSize": "File size too large.",
+        "invalidFileType": "Inappropriate file format.",
+        "close": "Close"
+      },
+      "actions": {
+        "startImport": "Start import",
+        "clearly": "Understood!"
+      }
+    },
+    "home": {
+      "text": {
+        "masterVersionRegulations": "Master version of service configuration",
+        "lastModifiedDate": "Last modified on",
+        "creationDate": "Created on",
+        "latestRebase": "Latest update on",
+        "descriptionOfChange": "Description of change",
+        "mergeChanges": "Apply changes to master",
+        "abandonChanges": "Revert",
+        "rebaseChanges": "Get updates",
+        "notCheckedMessage": "Updates not checked",
+        "hasConflictsMessage": "Contains conflicts with master version",
+        "noConflictsMessage": "No conflicts with master version",
+        "regulationSuccess": "Service configuration published",
+        "regulationsPending": "Service configuration is being published",
+        "regulationFailed": "Service configuration not published",
+        "changesLabel": "Proposed changes",
+        "changesDescription": "Indicators of conflicting changes are displayed as of the last update check.",
+        "noChanges": "No modeled changes yet",
+        "links": "Links"
+      },
+      "DEPLOYMENT_STATUS": {
+        "success": "Deployment and verification process succeeded",
+        "pending": "Deployment and verification process is ongoing/not yet occurred",
+        "failed": "Deployment and verification process failed"
+      },
+      "forceMergeDialog": {
+        "okButton": "Apply",
+        "cancelButton": "Cancel",
+        "title": "Apply changes?",
+        "text": "Please note that the deployment and verification process has not yet been completed or completed with errors. Applying the changes may result in errors in the service configurations master version."
+      },
+      "actions": {
+        "openGerrit": "Open VCS",
+        "openCicdTool": "Open CI/CD tool"
+      }
+    },
+    "globalSettings": {
+      "title": "Email settings",
+      "text": {
+        "hint": "The master version is read-only. Create a candidate version to edit the email settings.",
+        "support": "Support service",
+        "supportDescription": "If users receive a critical error, they can contact support at this address.",
+        "registry": "Registry name",
+        "registryNameDescription": "The full name is the official legal name of the registry. It is used in official correspondence, documents, user portal footers, etc. The abbreviated name is used in informal communication, as well as where there is not enough space for the full name, for example, at the top of user portals.",
+        "theme": "Interface theme",
+        "themeDescription": "The selected theme applies to all portals (Citizen portal, Officer portal, Digital Services Development Platform). It does not affect the Control Plane interface.",
+        "OS_Default_Light": "Opensource UI",
+        "Diia_Light": "Diia Light"
+      },
+      "fields": {
+        "supportAddress": "Support email address",
+        "registryFullName": "Registry full name",
+        "registryFullNameRules": "Can be between 3 and 512 characters long. Valid characters: \"A-Z\", \"a-z\", \"0-9\", \"-\", \",\", \".\", apostrophe ('), space. The registry name must start with three letters.",
+        "registryName": "Registry short name",
+        "registryNameRules": "Can have from 1 to 42 characters. Valid characters: \"A-Z\", \"a-z\", \"0-9\", \"-\", \",\", \".\", apostrophe ('), space. The registry short name must start with at least one letter."
+      },
+      "notifications": {
+        "success": {
+          "updateSettings": {
+            "message": "Global settings saved successfully."
+          }
+        }
+      },
+      "actions": {
+        "submitButton": "Save changes"
+      }
+    },
+    "formList": {
+      "title": "Modeled forms",
+      "fields": {
+        "searchLabel": "Search by name",
+        "searchPlaceholder": "Enter the form name"
+      },
+      "table": {
+        "createForm": "Create new form",
+        "emptyPlaceholder": "No UI forms have been modeled yet.",
+        "columns": {
+          "name": "Form name",
+          "serviceName": "Service name",
+          "created": "Created",
+          "modified": "Last modified"
+        }
+      }
+    },
+    "i18nList": {
+      "title": "Service translations",
+      "text": {
+        "availableLanguages": "Configured languages for translation"
+      },
+      "table": {
+        "emptyPlaceholder": "No configured languages have been defined for registry.",
+        "actions": {
+          "create": "Add translation"
+        }
+      },
+      "modal": {
+        "deleteI18n": {
+          "title": "Delete bundle?",
+          "description": "Delete bundle for {{title}}?",
+          "actions": {
+            "delete": "Delete",
+            "cancel": "Cancel"
+          }
+        },
+        "editI18n": {
+          "title": {
+            "edit": "Edit bundle ({{title}})",
+            "create": "Add bundle ({{title}})"
+          },
+          "autocomplete": {
+            "label": "The bundle for which language is taken as a basis"
+          },
+          "actions": {
+            "save": "Save",
+            "cancel": "Cancel"
+          }
+        }
+      }
+    },
+    "editTable": {
+      "title": "Table view",
+      "text": {
+        "createButton": "Save changes"
+      }
+    },
+    "editProcess": {
+      "title": "Editing a business process",
+      "text": {
+        "nameChangedError": "Unable to change the service name of an existing business process.",
+        "createButton": "Save changes",
+        "readOnlyPageTitle": "Business process view"
+      },
+      "actions": {
+        "clone": "Copy business process",
+        "delete": "Delete"
+      },
+      "modal": {
+        "conflict": {
+          "descriptionMaster": "This business process has been updated in the master version. To avoid losing your work, we recommend you copy the code, refresh the business process page, and edit it again.",
+          "descriptionCandidate": "This business process has been updated in the current candidate version. To avoid losing your work, we recommend you copy the code, refresh the business process page, and edit it again.",
+          "textButton": "Return to editing"
+        }
+      }
+    },
+    "editForm": {
+      "title": "Edit form",
+      "fields": {
+        "formCode": "Form code"
+      },
+      "text": {
+        "formInvalidJson": "The JSON representation contains errors.",
+        "readOnlyPageTitle": "View form",
+        "createButton": "Save changes",
+        "cancelButton": "Cancel",
+        "title": "Form actions"
+      },
+      "actions": {
+        "clone": "Copy form",
+        "export": "Export .json",
+        "delete": "Delete"
+      },
+      "modal": {
+        "conflict": {
+          "descriptionMaster": "This form has been updated in the master version. To keep the result of your work, we advise you to copy the code, update the page with the form, and edit it again.",
+          "descriptionCandidate": "This form has been updated in the current candidate version. To keep the result of your work, we advise you to copy the code, refresh the page with the form, and edit it again.",
+          "textButton": "Return to editing"
+        }
+      }
+    },
+    "createForm": {
+      "title": "Create form",
+      "text": {
+        "createButton": "Create form",
+        "cancelButton": "Cancel",
+        "formInvalidJson": "The JSON representation contains errors."
+      },
+      "notifications": {
+        "error": {
+          "conflict": {
+            "title": "Sorry, something went wrong.",
+            "message": "UI form with this service name already exists."
+          }
+        }
+      }
+    },
+    "createProcess": {
+      "title": "Creating a business process",
+      "text": {
+        "createButton": "Create business process"
+      }
+    }
+  },
+  "formRenderer": {
+    "customFormioComponents": {
+      "checkbox": {
+        "optionTrue": "Yes",
+        "optionFalse": "No"
+      },
+      "select": {
+        "noOptionsText": "No options available"
+      },
+      "day": {
+        "january": "January",
+        "february": "February",
+        "march": "March",
+        "april": "April",
+        "may": "May",
+        "june": "June",
+        "july": "July",
+        "august": "August",
+        "september": "September",
+        "october": "October",
+        "november": "November",
+        "december": "December"
+      },
+      "dateTime": {
+        "invalidDate": "Invalid date"
+      },
+      "editGrid": {
+        "add": "Add",
+        "addModalTitle": "Add data",
+        "view": "View",
+        "viewModalTitle": "View Data",
+        "save": "Save",
+        "cancel": "Cancel",
+        "edit": "Change",
+        "editModalTitle": "Edit data",
+        "delete": "Delete",
+        "deleteConfirmationTitle": "Delete this entry?",
+        "deleteConfirmationYes": "Yes, delete",
+        "deleteConfirmationNo": "No, leave",
+        "empty": "There are no entries in this table yet",
+        "perPage": "Rows per page",
+        "pagination": "{{from}}-{{to}} with {{count}}",
+        "paginationNoCount": "Lines {{from}}-{{to}}",
+        "aria": {
+          "firstPage": "First Page",
+          "lastPage": "Last Page",
+          "nextPage": "Next Page",
+          "prevPage": "Previous page"
+        },
+        "searchPlaceholder": "Enter 3 or more characters",
+        "searchLabel": "Search",
+        "searchEmptyPlaceholder": "No matches were found that satisfy the search condition",
+        "options": "Options"
+      }
+    },
+    "File is too big; it must be at most {{ size }}": "The size of the uploaded file exceeds {{ size }}. Please compress the file and try again",
+    "File is too small; it must be at least {{ size }}": "The size of the uploaded file is smaller than {{ size }}. Please upload a file of the required size",
+    "Total file size is too big; it must be at most {{ size }}": "The total size of the downloaded files exceeds {{ size }}.",
+    "Total file size is too small; it must be at least {{ size }}": "The total size of the downloaded files is smaller than {{ size }}.",
+    "File is the wrong type; it must be {{ pattern }}": "Supported {{ pattern }} formats. Please upload a supported format file",
+    "You can only select up to {{maxCount}} items.": "You can only select up to {{maxCount}} items",
+    "You must select at least {{minCount}} items.": "You must select at least {{minCount}} items",
+    "File with the same name is already uploaded": "File with the same name is already uploaded",
+    "Please save all rows": "Please save all rows before confirming",
+    "unsavedRowsError": "Please save all rows before confirming",
+    "invalidRowsError": "Please fix errors before confirming",
+    "invalidRowError": "Invalid row. Please fix or delete",
+    "alertMessageWithLabel": "{{label}}: {{message}}",
+    "alertMessage": "{{message}}",
+    "complete": "Sending completed",
+    "errorListHotkey": "Press Ctrl + Alt + X to return to the error list",
+    "errorsListNavigationMessage": "Click to go to the row with the error",
+    "submitError": "Please check the form and correct any errors before continuing",
+    "required": "Required field",
+    "unique": "Field must be unique",
+    "array": "Field must be a list",
+    "array_nonempty": "The field must not be an empty list",
+    "nonarray": "Field must not be a list",
+    "select": "The field contains an invalid selection",
+    "pattern": "The value does not match the required format {{pattern}}",
+    "minLength": "The number of characters allowed is at least {{length}}",
+    "maxLength": "Maximum number of characters is {{length}}",
+    "minWords": "The number of words allowed is at least {{length}}",
+    "maxWords": "Maximum number of words is {{length}}",
+    "min": "Valid values are at least {{min}}",
+    "max": "Valid values are no more than {{max}}",
+    "maxDate": "Dates after {{- maxDate}} are not supported",
+    "minDate": "Dates up to {{- minDate}} are not supported",
+    "maxYear": "Years after {{maxYear}} are not supported",
+    "minYear": "Years up to {{minYear}} are not supported",
+    "invalid_email": "Email address must be in the format name@mail.com",
+    "blacklist_email": "Sorry, mail services of sub-sanctioned companies mail.ru and yandex are prohibited",
+    "invalid_url": "{{field}} must be a valid URL",
+    "invalid_regex": "{{field}} does not match the required {{regex}} format",
+    "invalid_date": "{{field}} is not a valid date",
+    "invalid_day": "{{field}} is not a valid day",
+    "mask": "{{field}} does not match the required format",
+    "valueIsNotAvailable": "Forbidden value",
+    "stripe": "{{stripe}}",
+    "month": "Month",
+    "day": "Day",
+    "year": "Year",
+    "january": "January",
+    "february": "February",
+    "march": "March",
+    "april": "April",
+    "may": "May",
+    "june": "June",
+    "july": "July",
+    "august": "August",
+    "september": "September",
+    "october": "October",
+    "november": "November",
+    "december": "December",
+    "next": "next",
+    "previous": "previous",
+    "cancel": "Cancel",
+    "submit": "Save",
+    "approve": "Confirm",
+    "confirmCancel": "Are you sure you want to cancel?",
+    "saveDraftInstanceError": "Failed to save draft",
+    "saveDraftAuthError": "Failed to save draft",
+    "restoreDraftInstanceError": "Failed to restore draft",
+    "time": "Invalid time",
+    "error": "Please fix the error(s)",
+    "File Name": "File",
+    "Size": "Size",
+    "Drop files to attach,": "Drop a file here",
+    "or": "or",
+    "browse": "select it on your media",
+    "Starting upload.": "Uploading the file",
+    "APIKeyNotUniqueError": "The API key is not unique",
+    "defaultErrorMessage": "Sorry, something went wrong. Please try again",
+    "unauthorizedRequest": "Unauthorized access to the task. Please authenticate and try again.",
+    "taskCompleted": "The task has already been completed. The provision of the service has already been completed",
+    "taskNotAvailable": "The task is not available for execution",
+    "confirmModalTitle": "Please confirm the action",
+    "tooltipFileMinSize": "The value must be a positive number, with a dot as a separator in the case of decimal fractions, with units of B, KB, MB or GB (the value without a unit of measurement will be read in bytes) and not exceed the value of the «File Maximum Size»",
+    "tooltipFileMaxSize": "The value must be a positive number, separated by a dot in the case of decimal fractions, with units of B, KB, MB, or GB (a value without a unit will be read in bytes) and not exceed the default value, which set by registry administrator",
+    "tooltipFileMinTotalSize": "The value must be a positive number, with a dot as a separator in the case of decimal fractions, with measurement units of B, KB, MB or GB (the value without a measurement unit will be read in bytes) and not exceed the value of the field «Maximum total size»",
+    "tooltipFileMaxTotalSize": "The value must be a positive number, separated by a dot in the case of decimal fractions, with units of B, KB, MB, or GB (a value without a unit will be read in bytes) and not exceed the default value of set by registry administrator",
+    "moreThanMaxValueSetByAdministrator": "The maximum value set by the registry administrator has been exceeded",
+    "moreThanMaxValue": "Maximum allowed value exceeded",
+    "checkFieldFormat": "Check field format",
+    "invalidComponentValue": "We noticed an unsupported value was used. No worries, reach out to the registry administrator for a bit of help."
+  },
+  "serverMessages": {
+    "ERROR_NONE": "Executed successfully",
+    "ERROR_NOT_INITIALIZED": "The library is not initialized",
+    "ERROR_BAD_PARAMETER": "Invalid parameter",
+    "ERROR_LIBRARY_LOAD": "An error occurred when loading base libraries",
+    "ERROR_READ_SETTINGS": "An error occurred while reading parameters",
+    "ERROR_TRANSMIT_REQUEST": "An error occurred while transmitting a request to the CA server via HTTP",
+    "ERROR_MEMORY_ALLOCATION": "An error occurred while allocating memory",
+    "WARNING_END_OF_ENUM": "End of enumeration",
+    "ERROR_PROXY_NOT_AUTHORIZED": "Authentication to the proxy server failed or is not possible",
+    "ERROR_NO_GUI_DIALOGS": "Dialogue with the operator is not supported",
+    "ERROR_DOWNLOAD_FILE": "An error occurred while downloading a file from an HTTP server",
+    "ERROR_WRITE_SETTINGS": "An error occurred while writing parameters",
+    "ERROR_CANCELED_BY_GUI": "The operation was canceled by the operator",
+    "ERROR_OFFLINE_MODE": "Access to the CA server is not possible (offline mode is enabled)",
+    "ERROR_KEY_MEDIAS_FAILED": "An error occurred while working with the key media",
+    "ERROR_KEY_MEDIAS_ACCESS_FAILED": "An error occurred while accessing key media",
+    "ERROR_KEY_MEDIAS_READ_FAILED": "An error occurred while reading private key from key media",
+    "ERROR_KEY_MEDIAS_WRITE_FAILED": "An error occurred while writing private key to key media",
+    "WARNING_KEY_MEDIAS_READ_ONLY": "Key media does not support data destruction",
+    "ERROR_KEY_MEDIAS_DELETE": "An error occurred while deleting private key from key media",
+    "ERROR_KEY_MEDIAS_CLEAR": "An error occurred while clearing key media",
+    "ERROR_BAD_PRIVATE_KEY": "An error occurred while opening private key (wrong password or key is damaged)",
+    "ERROR_PKI_FORMATS_FAILED": "An error occurred while parsing or generating data (data is damaged or format is wrong)",
+    "ERROR_CSP_FAILED": "An error occurred while performing cryptographic transformations",
+    "ERROR_BAD_SIGNATURE": "Sorry, the signature did not pass validation. Please try again",
+    "ERROR_AUTH_FAILED": "An error occurred during authentication (authentication data is damaged)",
+    "ERROR_NOT_RECEIVER": "The private key owner is not in the CRL",
+    "ERROR_STORAGE_FAILED": "An error occurred when working with a file-based certificate store and lists of revoked certificates",
+    "ERROR_BAD_CERT": "The certificate is damaged or cannot be used",
+    "ERROR_CERT_NOT_FOUND": "Certificate not found",
+    "ERROR_INVALID_CERT_TIME": "The certificate or the corresponding private key has expired",
+    "ERROR_CERT_IN_CRL": "Certificate is not valid (when checking with CRL)",
+    "ERROR_BAD_CRL": "CRL is damaged",
+    "ERROR_NO_VALID_CRLS": "No valid CRLs were found (perhaps an error occurred while downloading them from the KCA server or downloading is not possible)",
+    "ERROR_GET_TIME_STAMP": "An error occurred while getting time stamp",
+    "ERROR_BAD_TSP_RESPONSE": "An error occurred while parsing the response from the TSP server",
+    "ERROR_TSP_SERVER_CERT_NOT_FOUND": "TSP server certificate not found",
+    "ERROR_TSP_SERVER_CERT_INVALID": "TSP server certificate is not valid (valid CRLs may not be found)",
+    "ERROR_GET_OCSP_STATUS": "An error occurred while trying to get the status of the certificate over the OCSP protocol",
+    "ERROR_BAD_OCSP_RESPONSE": "An error occurred while parsing the response from the OCSP server",
+    "ERROR_CERT_BAD_BY_OCSP": "Certificate is not valid (when checking with the OCSP protocol)",
+    "ERROR_OCSP_SERVER_CERT_NOT_FOUND": "OCSP server certificate not found",
+    "ERROR_OCSP_SERVER_CERT_INVALID": "OCSP server certificate is not valid (valid CRLs may not be found)",
+    "ERROR_LDAP_ERROR": "An error occurred while working with LDAP server",
+    "ERROR_SIGNATURE_EXPIRED": "The difference between the signature and the current time has exceeded the allowed interval",
+    "ERROR_SIGNATURE_DRFO_MISMATCH": "DRFO code of the signature and the user do not match",
+    "ERROR_SIGNATURE_EDRPOU_MISMATCH": "EDRPOU code of the signature and the user do not match",
+    "ERROR_SIGNATURE_NAME_MISMATCH": "Name of the signature and the user do not match",
+    "ERROR_EMPTY_DRFO": "The signature does not contain the DRFO code. Please use another signature",
+    "ERROR_EMPTY_EDRPOU": "You are authenticated as a legal entity. Please use a legal entity key to sign",
+    "ERROR_EMPTY_FULL_NAME": "Use of a seal is not supported. Please use a personalized key",
+    "ERROR_EMPTY_TIME_INFO": "The signature does not contain a time stamp",
+    "ERROR_UNKNOWN_ESEAL": "The seal is not authorized for signing",
+    "ERROR_INVALID_JWT": "The user token does not contain the necessary attributes",
+    "ERROR_NOT_EMPTY_EDRPOU": "You are authenticated as an individual. Please use an individual key to sign",
+    "ERROR_EMPTY_ALLOWED_SUBJECT": "The type of validation rules packet is not specified",
+    "ERROR_NOT_ENTREPRENEUR_SIGNATURE": "You used the key of a representative of a private entrepreneur or a legal entity. Please use your own private entrepreneur key",
+    "ERROR_EMPTY_ENTREPRENEUR_EDRPOU": "You are authenticated as an individual entrepreneur. Please use an individual entrepreneur key to sign",
+    "ERROR_MOCK_SIGN_MISMATCH": "The seal mock verification failed",
+    "ERROR_UNKNOWN": "Something went wrong",
+    "ERROR_EMPTY_TOKEN_EDRPOU": "You are authenticated as an individual. Please use an individual key to sign",
+    "ERROR_EMAIL_ADDRESS_EMPTY": "Field is required",
+    "ERROR_EMAIL_ADDRESS_NOT_VALID": "Please check the email address",
+    "I18n bundle {{bundleName}} not found.": "I18n bundle {{bundleName}} not found.",
+    "I18n bundle {{bundleName}} already exists.": "I18n bundle {{bundleName}} already exists.",
+    "data-factory": {
+      "error": {
+        "client-error": "Client error",
+        "header-are-missing": "Mandatory header is missing",
+        "invalid-header-value": "Invalid header value (Ceph misses value for this key)",
+        "file-not-found": "File not found",
+        "method-argument-type-mismatch": "Method argument type mismatch",
+        "authentication-failed": "Authentication failed",
+        "forbidden-operation": "Forbidden operation",
+        "jwt-expired": "JWT expired",
+        "not-found": "Not found",
+        "constraint-violation": "Data-base constraint violation",
+        "signature-violation": "Body signature violation",
+        "unsupported-media-type": "Unsupported media type",
+        "validation-error": "Variable validation error",
+        "runtime-error": "Something got wrong",
+        "third-party-service-unavailable": "Third-party service unavailable",
+        "internal-contract-violation": "Internal contract violation",
+        "timeout-error": "Kafka timeout error",
+        "file-was-changed": "File was changed",
+        "service-unavailable": "Service unavailable"
+      }
+    },
+    "file": {
+      "validation": {
+        "exception": {
+          "format": "Supported {{supportedExtensions}} formats. Please upload a supported format file",
+          "no-extension": "Filename doesn't have any extensions"
+        }
+      }
+    },
+    "process-instance": {
+      "status": {
+        "title": {
+          "pending": "Pending task execution",
+          "in-progress": "In progress",
+          "suspended": "Suspended by administrator",
+          "completed": "Service provided has been completed",
+          "externally-terminated": "Terminated by administrator",
+          "citizen-pending": "Draft",
+          "citizen-in-progress": "Under processing",
+          "citizen-suspended": "Service temporarily unavailable"
+        }
+      }
+    },
+    "user-task": {
+      "not-exists": "Task with id {{userTaskId}} does not exist",
+      "not-exists-or-completed": "Task does not exist or has already been completed",
+      "already-assigned": "Task {{userTaskId}} was accepted for execution by another employee.",
+      "authorization-error": "No access to task with id {{userTaskId}}"
+    },
+    "file-validator": {
+      "error": {
+        "title": {
+          "encoding": "Inappropriate file encoding.",
+          "max-size": "The file is too large.",
+          "extension": "Inappropriate file format.",
+          "token": "Necessary attributes have not been created in the user management system. Please contact the administrator.",
+          "form-already-exists": "The form's system name is not unique. Please enter the system name that is not used in any registry forms.",
+          "bp-already-exists": "A business process with this system name already exists."
+        },
+        "table-not-found": "Table was not found."
+      }
+    },
+    "group-validator": {
+      "error": {
+        "group": {
+          "required": "The list of groups is mandatory.",
+          "name": {
+            "required": "Group name is mandatory.",
+            "unique": "A group with this name already exists. Please enter a different name.",
+            "regex": "Group name should contain only valid characters."
+          },
+          "process-definition": {
+            "required": "Business process identifiers are required.",
+            "duplicate": "A business process can belong to only one group."
+          }
+        }
+      }
+    }
+  }
+}

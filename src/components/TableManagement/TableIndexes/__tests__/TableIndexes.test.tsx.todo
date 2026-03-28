@@ -1,0 +1,11 @@
+import React from 'react';
+import { shallow } from 'enzyme';
+import Table from 'components/Table';
+import TableIndexes from '../TableIndexes';
+
+describe('TableIndexes', () => {
+  it('should render Table', () => {
+    const wrapper = shallow(<TableIndexes indexes={[]} />);
+    expect(wrapper.find(Table).exists()).toBeTruthy();
+  });
+});

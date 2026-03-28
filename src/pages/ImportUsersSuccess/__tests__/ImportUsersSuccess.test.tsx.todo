@@ -1,0 +1,57 @@
+import { shallow } from 'enzyme';
+import React from 'react';
+import { useDispatch } from 'react-redux';
+import { push } from 'connected-react-router';
+import useVersion from 'hooks/useVersion';
+
+import { ROUTES } from 'constants/routes';
+import CommonLayout from 'components/Layouts/CommonLayout';
+import Button from '#web-components/components/Button';
+
+import ImportUsersSuccessPage from '../ImportUsersSuccessPage';
+
+vi.mock('react-redux', () => {
+  const redux = vi.requireActual('react-redux');
+  return {
+    ...redux,
+    useDispatch: vi.fn(),
+  };
+});
+
+vi.mock('connected-react-router', () => {
+  return {
+    push: vi.fn(),
+  };
+});
+vi.mock('hooks/useVersion', () => vi.fn());
+
+const useVersionMock = vi.mocked(useVersion);
+const useDispatchMock = vi.mocked(useDispatch);
+const pushMock = vi.mocked(push);
+
+describe('ImportUsersPage', () => {
+  beforeEach(() => {
+    useVersionMock.mockReturnValue({ versionId: ':versionId' });
+  });
+  it('should render component CommonLayout', () => {
+    const wrapper = shallow(<ImportUsersSuccessPage />);
+    expect(wrapper.find(CommonLayout).exists()).toBeTruthy();
+  });
+
+  it('should change router', () => {
+    const dispatch = vi.fn();
+    useDispatchMock.mockReturnValue(dispatch);
+    const wrapper = shallow(<ImportUsersSuccessPage />);
+    const button = wrapper
+      .find(Button);
+    const onClick = button.prop('onClick');
+
+    if (onClick) {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      onClick({});
+    }
+
+    expect(pushMock).toHaveBeenCalledWith(ROUTES.USERS);
+  });
+});

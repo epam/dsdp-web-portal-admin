@@ -1,0 +1,22 @@
+import React from 'react';
+import TabsLayout from 'components/Layouts/TabsLayout';
+import { shallow } from 'enzyme';
+import TableLayout from '../TableLayout';
+
+describe('TableLayout', () => {
+  it('should render TabsLayout', () => {
+    const wrapper = shallow(
+      <TableLayout
+        title="test title"
+        isLoading={false}
+        submitButtonText=""
+        onSubmit={() => undefined}
+        onCancel={() => undefined}
+        tableName="tableName"
+      >
+        hello test
+      </TableLayout>,
+    );
+    expect(wrapper.find(TabsLayout).exists()).toBeTruthy();
+  });
+});

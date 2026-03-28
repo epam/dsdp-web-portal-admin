@@ -1,0 +1,39 @@
+import { shallow } from 'enzyme';
+import React from 'react';
+import { ColumnDefinition, Order } from '#web-components/types/table';
+import MdtuTable from '#web-components/components/Table';
+import Table from '../Table';
+
+vi.mock('react-redux', () => {
+  const redux = vi.requireActual('react-redux');
+  return {
+    ...redux,
+    useSelector: vi.fn(),
+    useDispatch: vi.fn(),
+  };
+});
+
+describe('Table', () => {
+  const props = {
+    columnDefinitions: [{} as ColumnDefinition],
+    list: [{} as { id: string }],
+    order: Order.asc,
+    orderField: 'name',
+    onOrderChange: vi.fn(),
+    emptyPlaceholder: '',
+  };
+  it('should render compont Table', () => {
+    const wrapper = shallow(<Table {...props} />);
+    expect(wrapper.find(MdtuTable)).toBeTruthy();
+  });
+
+  it('should render component Table without header', () => {
+    const propsWithoutHeader = {
+      ...props,
+      hideHeader: true,
+    };
+    const wrapper = shallow(<Table {...propsWithoutHeader} />);
+    expect(wrapper.find(MdtuTable).prop('header')).not.toEqual(null);
+    expect(wrapper.find(MdtuTable).prop('header')?.hide).toBe(true);
+  });
+});

@@ -1,0 +1,80 @@
+import React from 'react';
+import { mount } from 'enzyme';
+import { useFormContext, Controller } from 'react-hook-form';
+
+import FormInvalidJson from 'components/FormManagement/FormInvalidJson';
+import { FormType } from '#web-components/components/Form/types';
+import FormCode from '../FormCode';
+
+React.useLayoutEffect = React.useEffect;
+
+vi.mock('react-hook-form', () => {
+  return {
+    Controller: vi.fn(),
+    useFormContext: vi.fn(),
+  };
+});
+
+vi.mock('@material-ui/core', () => ({
+  ...vi.requireActual('@material-ui/core'),
+  useMediaQuery: vi.fn(),
+}));
+
+const useFormContextMock = vi.mocked(useFormContext);
+const ControllerMock = vi.mocked(Controller);
+const onChangeMock = vi.fn();
+
+describe('FormCode', () => {
+  const register = vi.fn();
+  const setValue = vi.fn();
+  const getValues = vi.fn();
+  const watch = vi.fn();
+
+  beforeEach(() => {
+    getValues.mockReturnValue({ type: { value: FormType.form } });
+    useFormContextMock.mockReturnValue({
+      register, setValue, getValues, watch,
+    });
+  });
+  it('should render Controller', () => {
+    ControllerMock.mockImplementation(({ render: controllRender }) => {
+      const Component = controllRender({ field: { onChange: onChangeMock, name: 'ggg' } });
+
+      return Component;
+    });
+    mount(<FormCode />);
+    expect(ControllerMock).toBeCalled();
+  });
+  it('should call onChange after change input', () => {
+    ControllerMock.mockImplementation(({ render: controllerRender }) => {
+      const Component = controllerRender({ field: { name: 'gggggg', onChange: onChangeMock } });
+
+      return Component;
+    });
+    const wrapper = mount(<FormCode />);
+    expect(wrapper.find('Input')).toBeTruthy();
+    const input = wrapper
+      .find('Input');
+
+    const onChange = input.prop('onChange');
+
+    if (onChange) {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      onChange();
+    }
+
+    expect(onChangeMock).toBeCalled();
+  });
+
+  it('should render FormInvalidJson', () => {
+    watch.mockReturnValue(true);
+    ControllerMock.mockImplementation(({ render: controllerRender }) => {
+      const Component = controllerRender({ field: { name: 'gggggg', onChange: onChangeMock } });
+
+      return Component;
+    });
+    const wrapper = mount(<FormCode />);
+    expect(wrapper.find(FormInvalidJson).exists()).toBeTruthy();
+  });
+});

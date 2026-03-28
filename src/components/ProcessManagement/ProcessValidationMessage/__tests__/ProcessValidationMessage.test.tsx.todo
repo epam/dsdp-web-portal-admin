@@ -1,0 +1,24 @@
+import { shallow } from 'enzyme';
+import React from 'react';
+import { useFormContext } from 'react-hook-form';
+import FlashMessage from '#web-components/components/FlashMessage';
+import ProcessValidationMessage from '../ProcessValidationMessage';
+
+vi.mock('react-hook-form', () => ({
+  useFormContext: vi.fn(),
+}));
+
+const useFormContextMock = vi.mocked(useFormContext);
+
+describe('ProcessValidationMessage', () => {
+  it('should render FlashMessage if xml is not valid', () => {
+    useFormContextMock.mockReturnValue({ watch: () => false });
+    const wrapper = shallow(<ProcessValidationMessage />);
+    expect(wrapper.find(FlashMessage).exists()).toBeTruthy();
+  });
+  it('should not render FlashMessage if xml is valid', () => {
+    useFormContextMock.mockReturnValue({ watch: () => true });
+    const wrapper = shallow(<ProcessValidationMessage />);
+    expect(wrapper.find(FlashMessage).exists()).toBeFalsy();
+  });
+});

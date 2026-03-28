@@ -1,0 +1,54 @@
+import React from 'react';
+import { shallow } from 'enzyme';
+import { useDispatch } from 'react-redux';
+import { push } from 'connected-react-router';
+
+import CommonLayout from 'components/Layouts/CommonLayout';
+import useVersion from 'hooks/useVersion';
+import { ROUTES } from 'constants/routes';
+import Button from '#web-components/components/Button';
+
+import UserListPage from '../UserListPage';
+
+vi.mock('react-redux', () => {
+  const redux = vi.requireActual('react-redux');
+  return {
+    ...redux,
+    useDispatch: vi.fn(),
+  };
+});
+
+vi.mock('connected-react-router', () => {
+  return {
+    push: vi.fn(),
+  };
+});
+
+vi.mock('hooks/useVersion', () => vi.fn());
+const useVersionMock = vi.mocked(useVersion);
+const useDispatchMock = vi.mocked(useDispatch);
+const pushMock = vi.mocked(push);
+
+describe('UserListPage', () => {
+  beforeEach(() => {
+    useVersionMock.mockReturnValue({ versionId: ':versionId' });
+  });
+  it('should render CommonLayout component', () => {
+    const wrapper = shallow(<UserListPage />);
+    expect(wrapper.find(CommonLayout)).toBeTruthy();
+  });
+
+  it('should navigate to ROUTES.IMPORT_USERS', () => {
+    const dispatch = vi.fn();
+    useDispatchMock.mockReturnValue(dispatch);
+    const wrapper = shallow(<UserListPage />);
+    const button = wrapper.find(Button);
+    const onClick = button.prop('onClick');
+
+    if (onClick) {
+      onClick({} as any);
+    }
+
+    expect(pushMock).toHaveBeenCalledWith(ROUTES.IMPORT_USERS);
+  });
+});

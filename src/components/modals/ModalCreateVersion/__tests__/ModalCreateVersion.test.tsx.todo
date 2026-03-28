@@ -1,0 +1,35 @@
+import React from 'react';
+import { shallow } from 'enzyme';
+import { useForm } from 'react-hook-form';
+import Modal from '#web-components/components/Modal';
+import ModalCreateVersion from '../ModalCreateVersion';
+
+vi.mock('react-hook-form', () => {
+  const hookForm = vi.requireActual('react-hook-form');
+  return {
+    ...hookForm,
+    useForm: vi.fn(),
+  };
+});
+
+const useFormMock = vi.mocked(useForm);
+
+const props = {
+  isOpen: true,
+  onOpenChange: vi.fn(),
+  onModalSubmit: vi.fn(),
+};
+
+describe('ModalCreateVersion', () => {
+  beforeEach(() => {
+    useFormMock.mockReturnValue({
+      control: vi.fn(),
+      handleSubmit: vi.fn(),
+      formState: { errors: {} },
+    });
+  });
+  it('should render Modal component', () => {
+    const wrapper = shallow(<ModalCreateVersion {...props} />);
+    expect(wrapper.find(Modal).exists()).toBeTruthy();
+  });
+});

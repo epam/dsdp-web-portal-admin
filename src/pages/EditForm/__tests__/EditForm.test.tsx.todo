@@ -1,0 +1,260 @@
+import React from 'react';
+import { shallow } from 'enzyme';
+import { useForm } from 'react-hook-form';
+import { MenuItem, MenuList } from '@material-ui/core';
+import { useLocation, useParams, useRouteMatch } from 'react-router';
+import { useDispatch, useSelector } from 'react-redux';
+import { CALL_HISTORY_METHOD } from 'connected-react-router';
+
+import useQuery from 'hooks/useQuery';
+import { ROUTES } from 'constants/routes';
+import { deleteFormRequest, exportFormRequest } from 'store/form';
+import useVersion from 'hooks/useVersion';
+import useEntityMode from 'hooks/useEntityMode';
+
+import FormFields from 'components/FormManagement/FormFields';
+import FormLayout from 'components/Layouts/FormLayout';
+import { FormType } from '#web-components/components/Form/types';
+import EditFormPage from '../EditFormPage';
+
+vi.mock('react-redux', () => {
+  const redux = vi.requireActual('react-redux');
+  return {
+    ...redux,
+    useSelector: vi.fn(),
+    useDispatch: vi.fn(),
+  };
+});
+
+vi.mock('react-router', () => {
+  return {
+    useParams: vi.fn(),
+    useHistory: () => ({
+      push: vi.fn(),
+    }),
+    useRouteMatch: vi.fn(),
+    useLocation: vi.fn(),
+  };
+});
+
+vi.mock('react-hook-form', () => {
+  const hookForm = vi.requireActual('react-hook-form');
+  return {
+    ...hookForm,
+    useForm: vi.fn(),
+    useWatch: vi.fn(),
+  };
+});
+
+vi.mock('hooks/useVersion', () => vi.fn());
+
+vi.mock('hooks/useQuery', () => vi.fn());
+vi.mock('hooks/useEntityMode', () => vi.fn());
+
+const useFormMock = vi.mocked(useForm);
+const useParamsMock = vi.mocked(useParams);
+const useRouteMatchMock = vi.mocked(useRouteMatch);
+const useQueryMock = vi.mocked(useQuery);
+const useDispatchMock = vi.mocked(useDispatch);
+const useSelectorMock = vi.mocked(useSelector);
+const useVersionMock = vi.mocked(useVersion);
+const useEntityModeMock = vi.mocked(useEntityMode);
+const useLocationMock = vi.mocked(useLocation);
+const handleSubmitMock = vi.fn();
+const dispatch = vi.fn();
+
+describe('EditFormPage', () => {
+  const testVersionId = 'versionId';
+  const testFormId = '42';
+
+  beforeEach(() => {
+    useFormMock.mockReturnValue({
+      handleSubmit: handleSubmitMock,
+      getValues: vi.fn(),
+      control: vi.fn(),
+      register: vi.fn(),
+      formState: {
+        isValid: true,
+      },
+    });
+    useVersionMock.mockReturnValue({ versionId: testVersionId });
+    useParamsMock.mockReturnValue({ formId: testFormId });
+    useQueryMock.mockReturnValue({
+      has: () => false,
+      get: () => null,
+    });
+    useDispatchMock.mockReturnValue(dispatch);
+    useRouteMatchMock.mockReturnValue({
+      isExact: true,
+      path: ROUTES.EDIT_FORM,
+    });
+    useEntityModeMock.mockReturnValue('common');
+    useLocationMock.mockReturnValue({ pathname: '' });
+  });
+
+  it('should include form FormFields by default', () => {
+    const wrapper = shallow(<EditFormPage />);
+    expect(wrapper.find(FormFields).exists()).toBeTruthy();
+  });
+
+  describe('Menu items', () => {
+    let menuWrapper = shallow(<MenuList />);
+
+    beforeEach(() => {
+      useSelectorMock.mockReturnValue({});
+      useVersionMock.mockReturnValue({ versionId: testVersionId });
+      useLocationMock.mockReturnValue({ pathname: '' });
+      const wrapper = shallow(<EditFormPage />);
+      const formLayout = wrapper.find(FormLayout);
+      const Menu = () => formLayout.prop('menu') as any;
+
+      menuWrapper = shallow(<Menu />);
+    });
+
+    it('should move to a new form on clone', () => {
+      const cloneItem = menuWrapper
+        .findWhere((n) => n.text() === 'actions.clone')
+        .find(MenuItem);
+      const onClick = cloneItem.prop('onClick');
+
+      if (onClick) {
+        onClick({} as any);
+      }
+
+      expect(dispatch).toHaveBeenCalledWith({
+        type: CALL_HISTORY_METHOD,
+        payload: {
+          args: [ROUTES.CREATE_FORM.replace(':versionId', testVersionId), {}],
+          method: 'push',
+        },
+      });
+    });
+
+    it('should call correct action on export', () => {
+      const exportItem = menuWrapper
+        .findWhere((n) => n.text() === 'actions.export')
+        .find(MenuItem);
+      const onClick = exportItem.prop('onClick');
+
+      if (onClick) {
+        onClick({} as any);
+      }
+
+      expect(dispatch).toHaveBeenCalledWith({
+        type: exportFormRequest.type,
+        payload: {
+          name: testFormId,
+          versionId: testVersionId,
+        },
+      });
+    });
+
+    it('should call correct action on delete', () => {
+      const deleteItem = menuWrapper
+        .findWhere((n) => n.text() === 'actions.delete')
+        .find(MenuItem);
+      const onClick = deleteItem.prop('onClick');
+
+      if (onClick) {
+        onClick({} as any);
+      }
+
+      expect(dispatch).toHaveBeenCalledWith({
+        type: deleteFormRequest.type,
+        payload: { versionId: testVersionId, name: testFormId },
+      });
+    });
+  });
+  it('should dispatch form/updateFormRequest on onSubmit action', () => {
+    const submittingData = {
+      jsonSchemeIsInValid: false,
+      title: 'title',
+      path: 'path',
+      formSchema: {},
+      type: { value: FormType.form, label: FormType.form },
+      roles: [''],
+      showOnCardList: false,
+    };
+    useDispatchMock.mockReturnValue(dispatch);
+    handleSubmitMock.mockImplementation((onSubmit) => onSubmit(submittingData));
+    shallow(<EditFormPage />);
+    expect(dispatch).toBeCalledWith({
+      type: 'form/updateFormRequest',
+      payload: {
+        data: {
+          path: 'path',
+          name: 'path',
+          title: 'title',
+          type: FormType.form,
+          roles: [],
+          showOnCardList: false,
+        },
+        versionId: 'versionId',
+      },
+    });
+  });
+  it('should dispatch form/updateFormError on onSubmit action if jsonSchemeIsInValid', () => {
+    const submittingData = {
+      jsonSchemeIsInValid: true,
+      title: 'title',
+      path: 'path',
+      formSchema: {},
+      type: { value: FormType.form, label: FormType.form },
+      roles: [''],
+      showOnCardList: false,
+    };
+    useDispatchMock.mockReturnValue(dispatch);
+    handleSubmitMock.mockImplementation((onSubmit) => onSubmit(submittingData));
+    shallow(<EditFormPage />);
+    expect(dispatch).toBeCalledWith({
+      type: 'form/updateFormError',
+      payload: {
+        message: 'text.formInvalidJson',
+        type: 'NOTIFICATION',
+      },
+    });
+  });
+  it('should call onInvalid on onSubmit action', () => {
+    useFormMock.mockReturnValue({
+      handleSubmit: handleSubmitMock,
+      getValues: vi.fn(),
+      watch: vi.fn(),
+      register: vi.fn(),
+      formState: {
+        isValid: false,
+        isDirty: true,
+      },
+    });
+    const submittingData = {
+      jsonSchemeIsInValid: 'jsonSchemeIsInValid',
+      title: 'title',
+      path: 'path',
+      formSchema: {},
+      type: { value: FormType.form, label: FormType.form },
+      roles: [''],
+      showOnCardList: false,
+    };
+    useDispatchMock.mockReturnValue(dispatch);
+    handleSubmitMock.mockImplementation((onSubmit) => onSubmit(submittingData));
+    shallow(<EditFormPage />);
+    expect(dispatch).toBeCalledWith({
+      type: 'form/updateFormError',
+      payload: {
+        message: 'errors~form.invalidForm',
+        type: 'NOTIFICATION',
+      },
+    });
+  });
+  it('should dispatch updateFormError on onInvalid action', () => {
+    useDispatchMock.mockReturnValue(dispatch);
+    handleSubmitMock.mockImplementation((_onSubmit, onInvalid) => onInvalid());
+    shallow(<EditFormPage />);
+    expect(dispatch).toBeCalledWith({
+      type: 'form/updateFormError',
+      payload: {
+        message: 'errors~form.invalidForm',
+        type: 'NOTIFICATION',
+      },
+    });
+  });
+});

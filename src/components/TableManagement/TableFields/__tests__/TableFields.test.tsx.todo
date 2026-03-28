@@ -1,0 +1,38 @@
+import React from 'react';
+import { shallow } from 'enzyme';
+import { useFormContext, Controller } from 'react-hook-form';
+import TableFields from '../TableFields';
+
+const useFormContextMock = vi.mocked(useFormContext);
+
+vi.mock('react-hook-form', () => {
+  return {
+    ...vi.requireActual('react-hook-form'),
+    useFormContext: vi.fn(),
+  };
+});
+
+describe('TableFields', () => {
+  const register = vi.fn();
+  const setValue = vi.fn();
+  const getValues = vi.fn();
+  const watch = vi.fn();
+
+  beforeEach(() => {
+    useFormContextMock.mockReturnValue({
+      register, setValue, getValues, watch, formState: { errors: {} },
+    });
+  });
+
+  it('should render form', () => {
+    getValues.mockReturnValue({ formSchema: {} });
+    const wrapper = shallow(<TableFields className="" />);
+    expect(wrapper.find('form').exists()).toBeTruthy();
+  });
+
+  it('should render Controllers', () => {
+    getValues.mockReturnValue({ formSchema: {} });
+    const wrapper = shallow(<TableFields className="" />);
+    expect(wrapper.find(Controller).length).toBe(3);
+  });
+});

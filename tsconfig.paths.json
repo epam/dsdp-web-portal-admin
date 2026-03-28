@@ -1,0 +1,17 @@
+{
+  "extends": "./tsconfig.react.json",
+  "compilerOptions": {
+    "paths": {
+      "#shared/*": ["../../shared/src/*"],
+      "#web-components/*": ["../../web-components/src/*"]
+    }
+  },
+  "references": [
+    {
+      "path": "../shared"
+    },
+    {
+      "path": "../web-components"
+    }
+  ]
+}

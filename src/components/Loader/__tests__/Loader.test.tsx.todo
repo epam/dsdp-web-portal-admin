@@ -1,0 +1,13 @@
+import React from 'react';
+import { shallow } from 'enzyme';
+import WebComponentLoader from '#web-components/components/Loader';
+import Loader from '../Loader';
+
+describe('Loader', () => {
+  it('should render SvgUrlImage', () => {
+    const wrapper = shallow(
+      <Loader />,
+    );
+    expect(wrapper.find(WebComponentLoader).length).toBeTruthy();
+  });
+});

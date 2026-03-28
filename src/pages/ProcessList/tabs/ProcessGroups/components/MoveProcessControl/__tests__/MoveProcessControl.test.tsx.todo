@@ -1,0 +1,25 @@
+import { shallow } from 'enzyme';
+import React from 'react';
+
+import { ProcessDefinition } from '#shared/types/processDefinition';
+
+import MoveProcessModal from '../../MoveProcessModal';
+import MoveProcessControl from '../MoveProcessControl';
+
+vi.mock('react-redux', () => {
+  const redux = vi.requireActual('react-redux');
+  return {
+    ...redux,
+    useDispatch: vi.fn(),
+  };
+});
+
+describe('MoveProcessControl', () => {
+  const props = {
+    process: { id: 'id', name: 'name' } as ProcessDefinition,
+  };
+  it('should render component MoveProcessControl', () => {
+    const wrapper = shallow(<MoveProcessControl {...props} />);
+    expect(wrapper.find(MoveProcessModal)).toBeTruthy();
+  });
+});

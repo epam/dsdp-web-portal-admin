@@ -1,0 +1,66 @@
+import { shallow } from 'enzyme';
+import React from 'react';
+import { useSelector } from 'react-redux';
+
+import Table from 'components/Table';
+import { selectReportList } from 'store/report';
+
+import type { CellComponentProps } from '#web-components/types/table';
+import ReportListPage from '../ReportListPage';
+
+vi.mock('react-redux', () => {
+  const redux = vi.requireActual('react-redux');
+  return {
+    ...redux,
+    useSelector: vi.fn(),
+    useDispatch: vi.fn(),
+  };
+});
+vi.mock('store/report', () => {
+  return {
+    selectReportList: vi.fn(),
+    selectReportListIsLoading: vi.fn(),
+  };
+});
+
+const selectReportListMock = selectReportList as unknown as vi.Mock;
+const useSelectorMock = vi.mocked(useSelector);
+
+describe('ReportListPage', () => {
+  beforeEach(() => {
+    useSelectorMock.mockImplementation((fn) => fn());
+  });
+
+  it('should render compont Table', () => {
+    selectReportListMock.mockReturnValue([]);
+    const wrapper = shallow(<ReportListPage />);
+    expect(wrapper.find(Table).exists()).toBeTruthy();
+  });
+
+  describe('columnDefinitions', () => {
+    beforeEach(() => {
+      selectReportListMock.mockReturnValue([]);
+    });
+
+    it('should render download action', () => {
+      const wrapper = shallow(<ReportListPage />);
+      const table = wrapper.find(Table);
+      const columnDefinitions = table.prop('columnDefinitions');
+      const modifiedColumnDefinition = columnDefinitions.find((definition) => definition.property === '');
+      const CellComponent = modifiedColumnDefinition?.Component;
+      const report = {
+        id: 'id',
+      };
+      let result = null;
+
+      if (CellComponent) {
+        result = shallow(<CellComponent
+          item={report}
+          columnDefinition={{} as CellComponentProps['columnDefinition']}
+        />).find('a').exists();
+      }
+
+      expect(result).toBeTruthy();
+    });
+  });
+});

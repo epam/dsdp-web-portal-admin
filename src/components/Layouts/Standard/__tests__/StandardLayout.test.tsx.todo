@@ -1,0 +1,41 @@
+import React from 'react';
+import { shallow } from 'enzyme';
+import useVersion from 'hooks/useVersion';
+import StandardLayoutCommon from '#web-components/components/Layouts/Standard';
+import StandardLayout from '../StandardLayout';
+import ErrorLayout from '../../Error';
+
+vi.mock('react-redux', () => {
+  const redux = vi.requireActual('react-redux');
+  return {
+    ...redux,
+    useSelector: vi.fn(),
+    useDispatch: vi.fn(),
+  };
+});
+vi.mock('react-router', () => {
+  const router = vi.requireActual('react-router');
+  return {
+    ...router,
+    useLocation: vi.fn(),
+  };
+});
+
+vi.mock('hooks/useVersion', () => vi.fn());
+
+const useVersionMock = vi.mocked(useVersion);
+
+describe('StandardLayout', () => {
+  beforeEach(() => {
+    useVersionMock.mockReturnValue({ versionIsLoading: false });
+  });
+  it('should render standard layout if no error is present', () => {
+    const wrapper = shallow(<StandardLayout title="Title">{}</StandardLayout>);
+    expect(wrapper.find(StandardLayoutCommon).exists()).toBeTruthy();
+  });
+
+  it('should not render standard layout if error is present', () => {
+    const wrapper = shallow(<StandardLayout title="Title" error={{}}>{}</StandardLayout>);
+    expect(wrapper.find(ErrorLayout).exists()).toBeTruthy();
+  });
+});

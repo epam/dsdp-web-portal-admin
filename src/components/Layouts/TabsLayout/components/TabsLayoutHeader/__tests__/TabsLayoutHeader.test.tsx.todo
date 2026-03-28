@@ -1,0 +1,23 @@
+import React from 'react';
+import { shallow } from 'enzyme';
+
+import VersionMenu from 'components/VersionMenu';
+import TabsLayoutHeader from '../TabsLayoutHeader';
+
+const props = {
+  viewMode: true,
+  onViewModeChange: () => {},
+  submitButtonText: '',
+  cancelButtonText: '',
+  onSubmit: () => {},
+  onCancel: () => {},
+  title: 'title',
+};
+
+describe('TabsLayoutHeader', () => {
+  it('should render disabled VersionMenu', () => {
+    const wrapper = shallow(<TabsLayoutHeader {...props} />);
+    const versionMenuProps = wrapper.find(VersionMenu).props();
+    expect(versionMenuProps.disabled).toBeTruthy();
+  });
+});

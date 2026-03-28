@@ -1,0 +1,21 @@
+import { shallow } from 'enzyme';
+import React from 'react';
+import IconButton from '#web-components/components/IconButton';
+import PopperButton from '#web-components/components/PopperButton';
+
+import ProcessTableActions from '../ProcessTableActions';
+
+describe('ProcessTableActions', () => {
+  const props = {
+    onExportClick: () => vi.fn(),
+    onCloneClick: () => vi.fn(),
+    onDeleteClick: () => vi.fn(),
+    onEditClick: () => vi.fn(),
+  };
+  it('should render component ProcessTableActions', () => {
+    const wrapper = shallow(<ProcessTableActions {...props} />);
+    expect(wrapper.find(IconButton).exists()).toBeTruthy();
+    expect(wrapper.find(IconButton).length).toBe(3);
+    expect(wrapper.find(PopperButton)).toBeTruthy();
+  });
+});

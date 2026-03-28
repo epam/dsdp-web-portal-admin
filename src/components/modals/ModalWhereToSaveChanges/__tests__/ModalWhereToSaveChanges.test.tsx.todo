@@ -1,0 +1,19 @@
+import React from 'react';
+import { shallow } from 'enzyme';
+import Modal from '#web-components/components/Modal';
+import ModalWhereToSaveChanges from '../ModalWhereToSaveChanges';
+
+const props = {
+  isOpen: true,
+  onOpenChange: vi.fn(),
+  onChangesToMaster: vi.fn(),
+  onOpenCreateVersion: vi.fn(),
+  description: 'description',
+};
+
+describe('ModalWhereToSaveChanges', () => {
+  it('should render ModalWhereToSaveChanges component', () => {
+    const wrapper = shallow(<ModalWhereToSaveChanges {...props} />);
+    expect(wrapper.find(Modal).exists()).toBeTruthy();
+  });
+});

@@ -1,0 +1,54 @@
+import React from 'react';
+import { shallow } from 'enzyme';
+import NotificationsSystem from 'reapop';
+import { useDispatch } from 'react-redux';
+import useAuthentication from 'hooks/useAuthentication';
+import Notifications from '..';
+
+vi.mock('react-redux', () => {
+  const redux = vi.requireActual('react-redux');
+  return {
+    ...redux,
+    useSelector: vi.fn(),
+    useDispatch: vi.fn(),
+  };
+});
+
+vi.mock('hooks/useAuthentication', () => {
+  return vi.fn();
+});
+
+vi.mock('react-router', () => {
+  return {
+    useLocation: vi.fn(),
+  };
+});
+
+vi.mock('@material-ui/core', () => ({
+  ...vi.requireActual('@material-ui/core'),
+  useMediaQuery: vi.fn(),
+}));
+
+const useDispatchMock = vi.mocked(useDispatch);
+const useAuthenticationMock = vi.mocked(useAuthentication);
+
+describe('Notifications', () => {
+  it('should be render NotificationsSystem component', () => {
+    useAuthenticationMock.mockReturnValue({
+      authenticated: true,
+    });
+    const wrapper = shallow(<Notifications />);
+    expect(wrapper.find(NotificationsSystem)).toBeTruthy();
+  });
+
+  it('should remove notification by id when dismissNotification called', () => {
+    const mockDispatch = vi.fn();
+    useAuthenticationMock.mockReturnValue({
+      authenticated: true,
+    });
+    useDispatchMock.mockReturnValue(mockDispatch);
+    const wrapper = shallow(<Notifications />);
+    wrapper.find(NotificationsSystem).props().dismissNotification('test_id');
+    expect(mockDispatch).toHaveBeenCalledWith({ payload: 'test_id', type: 'reapop/dismissNotification' });
+  });
+});

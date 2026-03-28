@@ -1,0 +1,66 @@
+import { shallow } from 'enzyme';
+import React from 'react';
+import { useSelector } from 'react-redux';
+
+import useVersion from 'hooks/useVersion';
+import { selectGroupDataError } from 'store/processGroups';
+
+import GroupedEntityList from '#web-components/components/GroupedEntityList';
+
+import ComponentError from '../../../../../components/ComponentError/ComponentError';
+import ProcessGroupsTab from '../ProcessGroupsTab';
+
+vi.mock('react-redux', () => {
+  const redux = vi.requireActual('react-redux');
+  return {
+    ...redux,
+    useSelector: vi.fn(),
+    useDispatch: vi.fn(),
+  };
+});
+
+vi.mock('store/processGroups', () => {
+  const processGroups = vi.requireActual('store/processGroups');
+  return {
+    ...processGroups,
+    selectGroupDataError: vi.fn(),
+  };
+});
+
+vi.mock('hooks/useVersion', () => vi.fn());
+
+const useSelectorMock = vi.mocked(useSelector);
+const useVersionMock = vi.mocked(useVersion);
+const selectGroupDataErrorMock = selectGroupDataError as unknown as vi.Mock;
+
+describe('ProcessGroupsTab', () => {
+  beforeEach(() => {
+    useSelectorMock.mockImplementation((fn) => fn({
+      processGroups: {
+        groupData: {
+          groups: [],
+          ungrouped: [],
+        },
+        groupDataEdit: {
+          groups: [],
+          ungrouped: [],
+        },
+      },
+    }));
+    useVersionMock.mockReturnValue({ versionId: ':versionId' });
+  });
+
+  describe('columnDefinitions', () => {
+    it('should render GroupedEntityList', () => {
+      const wrapper = shallow(<ProcessGroupsTab />);
+
+      expect(wrapper.find(GroupedEntityList).exists()).toBeTruthy();
+    });
+    it('should show component Error', () => {
+      selectGroupDataErrorMock.mockReturnValue('error');
+      const wrapper = shallow(<ProcessGroupsTab />);
+
+      expect(wrapper.find(ComponentError).exists()).toBeTruthy();
+    });
+  });
+});

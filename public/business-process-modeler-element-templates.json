@@ -1,0 +1,1931 @@
+[
+  {
+    "name": "Add role to keycloak user",
+    "id": "addRoleToKeycloakUser",
+    "appliesTo": [
+      "bpmn:ServiceTask"
+    ],
+    "properties": [
+      {
+        "label": "Implementation Type",
+        "type": "Hidden",
+        "value": "${keycloakAddRoleConnectorDelegate}",
+        "editable": false,
+        "binding": {
+          "type": "property",
+          "name": "camunda:delegateExpression"
+        }
+      },
+      {
+        "label": "User name",
+      "description": "Keycloak user name",
+        "type": "String",
+        "binding": {
+          "type": "camunda:inputParameter",
+          "name": "user_name"
+        },
+        "constraints": {
+          "notEmpty": true
+        }
+      },
+      {
+        "label": "Role",
+        "description": "Keycloak role",
+        "type": "String",
+        "binding": {
+          "type": "camunda:inputParameter",
+          "name": "role"
+        },
+        "constraints": {
+          "notEmpty": true
+        }
+      }
+    ]
+  },
+  {
+    "name":"Call Activity",
+    "id":"callActivity",
+    "appliesTo":[
+      "bpmn:CallActivity"
+    ],
+    "properties":[
+      {
+        "label":"Called Element",
+        "type":"String",
+        "binding":{
+          "type":"property",
+          "name":"calledElement"
+        },
+        "constraints":{
+          "notEmpty":true
+        }
+      },
+      {
+        "label":"Input data",
+        "description":"Input data for Call Activity <br/>Example ${payload)",
+        "type":"String",
+        "binding":{
+          "type":"camunda:in",
+          "target":"inputPayload",
+          "expression": true
+        },
+        "constraints":{
+          "notEmpty":true
+        }
+      },
+      {
+        "label":"Output variable name",
+        "description":"Variable name with Call Activity output payload",
+        "type":"String",
+        "binding":{
+          "type":"camunda:out",
+          "source":"outputPayload"
+        },
+        "constraints":{
+          "notEmpty":true
+        }
+      }
+    ]
+  },
+  {
+    "name": "Throw system error",
+    "id": "camundaSystemErrorDelegate",
+    "appliesTo": [
+      "bpmn:ServiceTask"
+    ],
+    "properties": [
+      {
+        "label": "Implementation Type",
+        "type": "Hidden",
+        "value": "${camundaSystemErrorDelegate}",
+        "editable": false,
+        "binding": {
+          "type": "property",
+          "name": "camunda:delegateExpression"
+        }
+      },
+      {
+        "label": "Message",
+      "description": "Detailed message",
+        "type": "String",
+        "binding": {
+          "type": "camunda:inputParameter",
+          "name": "systemError"
+        }
+      }
+    ]
+  },
+  {
+    "name":"Check excerpt status",
+    "id":"checkExcerptStatusCallActivity",
+    "appliesTo":[
+        "bpmn:CallActivity"
+    ],
+    "properties":[
+        {
+          "label":"Called Process",
+          "type":"Hidden",
+          "editable":false,
+          "value":"check-excerpt-status",
+          "binding":{
+              "type":"property",
+              "name":"calledElement"
+          }
+        },
+        {
+          "label":"Asynchronous Before",
+          "type":"Hidden",
+          "value":true,
+          "editable":false,
+          "binding":{
+              "type":"property",
+              "name":"camunda:asyncBefore"
+          }
+        },
+        {
+          "label":"Input excerpt identifier",
+          "description":"Input excerpt identifier value <br/>${excerptIdentifier)",
+          "type":"String",
+          "binding":{
+              "type":"camunda:in",
+              "target":"excerptIdentifier",
+              "expression":true
+          },
+          "constraints":{
+              "notEmpty":true
+          }
+        },
+        {
+          "label":"Output variable name",
+          "description":"Variable name with excerpt status",
+          "type":"String",
+          "binding":{
+              "type":"camunda:out",
+              "source":"excerptStatus"
+          },
+          "constraints":{
+              "notEmpty":true
+          }
+        }
+    ]
+  },
+  {
+    "name": "Citizen Sign Task",
+    "id": "citizenSignTaskTemplate",
+    "appliesTo": [
+      "bpmn:UserTask"
+    ],
+    "properties": [
+      {
+        "label": "Form key",
+        "type": "String",
+        "binding": {
+          "type": "property",
+          "name": "camunda:formKey"
+        },
+        "constraints": {
+          "notEmpty": true
+        }
+      },
+      {
+        "label": "Assignee",
+        "value": "${initiator}",
+        "type": "String",
+        "binding": {
+          "type": "property",
+          "name": "camunda:assignee"
+        }
+      },
+      {
+        "label": "Candidate users",
+        "type": "String",
+        "binding": {
+          "type": "property",
+          "name": "camunda:candidateUsers"
+        }
+      },
+      {
+        "label": "Candidate roles",
+        "type": "String",
+        "binding": {
+          "type": "property",
+          "name": "camunda:candidateGroups"
+        }
+      },
+      {
+        "label": "Form data pre-population",
+        "description": "Value of the form data that will be pre-populated on user form<br/>e.g. ${formData} where formData is a variable with Spin JSON document of form ( S(map, 'application/json') )",
+        "type": "String",
+        "binding": {
+          "type": "camunda:inputParameter",
+          "name": "userTaskInputFormDataPrepopulate"
+        }
+      },
+      {
+        "label": "Form variables",
+        "description": "Form variables that will be accessed by the form",
+        "type": "String",
+        "binding": {
+          "type": "camunda:property",
+          "name": "formVariables"
+        }
+      },
+      {
+        "label": "eSign",
+        "description": "Is task signable",
+        "type": "Hidden",
+        "value": "true",
+        "binding": {
+          "type": "camunda:property",
+          "name": "eSign"
+        }
+      },
+      {
+        "label": "INDIVIDUAL",
+        "description": "Individual validation",
+        "type": "Dropdown",
+        "value": "false",
+        "choices": [
+          {
+            "name": "enable",
+            "value": "true"
+          },
+          {
+            "name": "disable",
+            "value": "false"
+          }
+        ],
+        "binding": {
+          "type": "camunda:property",
+          "name": "INDIVIDUAL"
+        }
+      },
+      {
+        "label": "ENTREPRENEUR",
+        "description": "Entrepreneur validation",
+        "type": "Dropdown",
+        "value": "false",
+        "choices": [
+          {
+            "name": "enable",
+            "value": "true"
+          },
+          {
+            "name": "disable",
+            "value": "false"
+          }
+        ],
+        "binding": {
+          "type": "camunda:property",
+          "name": "ENTREPRENEUR"
+        }
+      },
+      {
+        "label": "LEGAL",
+        "description": "Legal validation",
+        "type": "Dropdown",
+        "value": "false",
+        "choices": [
+          {
+            "name": "enable",
+            "value": "true"
+          },
+          {
+            "name": "disable",
+            "value": "false"
+          }
+        ],
+        "binding": {
+          "type": "camunda:property",
+          "name": "LEGAL"
+        }
+      }
+    ]
+  },
+  {
+    "name": "Define business process status",
+    "id": "defineBusinessProcessStatusDelegate",
+    "appliesTo": [
+      "bpmn:ServiceTask"
+    ],
+    "properties": [
+      {
+        "label": "Implementation Type",
+        "type": "Hidden",
+        "value": "${defineBusinessProcessStatusDelegate}",
+        "editable": false,
+        "binding": {
+          "type": "property",
+          "name": "camunda:delegateExpression"
+        }
+      },
+      {
+        "label": "Status",
+        "type": "String",
+        "binding": {
+          "type": "camunda:inputParameter",
+          "name": "status"
+        },
+        "constraints": {
+          "notEmpty": true
+        }
+      }
+    ]
+  },
+  {
+    "name": "Define process business key",
+    "id": "defineProcessBusinessKeyDelegate",
+    "appliesTo": [
+      "bpmn:ServiceTask"
+    ],
+    "properties": [
+      {
+        "label": "Implementation Type",
+        "type": "Hidden",
+        "value": "${defineProcessBusinessKeyDelegate}",
+        "editable": false,
+        "binding": {
+          "type": "property",
+          "name": "camunda:delegateExpression"
+        }
+      },
+      {
+        "label": "Business key",
+        "type": "String",
+        "binding": {
+          "type": "camunda:inputParameter",
+          "name": "businessKey"
+        },
+        "constraints": {
+          "notEmpty": true
+        }
+      }
+    ]
+  },
+  {
+    "name": "Digital signature by DSO service",
+    "id": "digitalSignatureConnectorDelegate",
+    "appliesTo": [
+      "bpmn:ServiceTask"
+    ],
+    "properties": [
+      {
+        "label": "Implementation Type",
+        "type": "Hidden",
+        "value": "${digitalSignatureConnectorDelegate}",
+        "editable": false,
+        "binding": {
+          "type": "property",
+          "name": "camunda:delegateExpression"
+        }
+      },
+      {
+        "label": "Payload",
+        "description": "Request body",
+        "type": "String",
+        "binding": {
+          "type": "camunda:inputParameter",
+          "name": "payload"
+        },
+        "constraints": {
+          "notEmpty": true
+        }
+      },
+      {
+        "label": "X-Access-Token source",
+        "description": "Access token of the user<br/>(${initiator().accessToken or completer('taskDefinitionId').accessToken})",
+        "type": "String",
+        "binding": {
+          "type": "camunda:inputParameter",
+          "name": "x_access_token"
+        },
+        "constraints": {
+          "notEmpty": true
+        }
+      },
+      {
+        "label": "Result variable",
+        "description": "The process variable to put response to (transient)",
+        "type": "String",
+        "value": "response",
+        "binding": {
+          "type": "camunda:outputParameter",
+          "source": "${ response }"
+        },
+        "constraints": {
+          "notEmpty": true
+        }
+      }
+    ]
+  },
+  {
+    "name": "Generate Excerpt",
+    "id": "excerptConnectorGenerateDelegate",
+    "appliesTo": [
+      "bpmn:ServiceTask"
+    ],
+    "properties": [
+      {
+        "label": "Implementation Type",
+        "type": "Hidden",
+        "value": "${excerptConnectorGenerateDelegate}",
+        "editable": false,
+        "binding": {
+          "type": "property",
+          "name": "camunda:delegateExpression"
+        }
+      },
+      {
+        "label": "Excerpt Type",
+        "description": "Excerpt Type",
+        "type": "String",
+        "binding": {
+          "type": "camunda:inputParameter",
+          "name": "excerptType"
+        },
+        "constraints": {
+          "notEmpty": true
+        }
+      },
+      {
+        "label": "Excerpt Input Data",
+        "description": "Map that contains input data for excerpt",
+        "type": "String",
+        "binding": {
+          "type": "camunda:inputParameter",
+          "name": "excerptInputData"
+        },
+        "constraints": {
+          "notEmpty": true
+        }
+      },
+      {
+        "label": "Requires System Signature",
+        "description": "Requires System Signature ('true' or 'false')",
+        "type": "String",
+        "binding": {
+          "type": "camunda:inputParameter",
+          "name": "requiresSystemSignature"
+        },
+        "constraints": {
+          "notEmpty": true
+        }
+      },
+      {
+        "label": "X-Access-Token",
+        "description": "Access token of the user<br/>(${initiator().accessToken or completer('taskDefinitionId').accessToken})",
+        "type": "String",
+        "binding": {
+          "type": "camunda:inputParameter",
+          "name": "x_access_token"
+        }
+      },
+      {
+        "label": "X-Digital-Signature source",
+        "description": "Ceph key of the document containing X-Digital-Signature",
+        "type": "String",
+        "binding": {
+          "type": "camunda:inputParameter",
+          "name": "x_digital_signature_ceph_key"
+        }
+      },
+      {
+        "label": "X-Digital-Signature-Derived source",
+        "description": "Ceph key of document that contains X-Digital-Signature-Derived",
+        "type": "String",
+        "binding": {
+          "type": "camunda:inputParameter",
+          "name": "x_digital_signature_derived_ceph_key"
+        }
+      },
+      {
+        "label": "Result variable",
+        "description": "The process variable to put response to (transient)",
+        "type": "String",
+        "value": "response",
+        "binding": {
+          "type": "camunda:outputParameter",
+          "source": "${ response }"
+        },
+        "constraints": {
+          "notEmpty": true
+        }
+      }
+    ]
+  },
+  {
+    "name": "Get Excerpt Status",
+    "id": "excerptConnectorStatusDelegate",
+    "appliesTo": [
+      "bpmn:ServiceTask"
+    ],
+    "properties": [
+      {
+        "label": "Implementation Type",
+        "type": "Hidden",
+        "value": "${excerptConnectorStatusDelegate}",
+        "editable": false,
+        "binding": {
+          "type": "property",
+          "name": "camunda:delegateExpression"
+        }
+      },
+      {
+        "label": "Excerpt Identifier",
+        "description": "An excerpt ID",
+        "type": "String",
+        "binding": {
+          "type": "camunda:inputParameter",
+          "name": "excerptIdentifier"
+        },
+        "constraints": {
+          "notEmpty": true
+        }
+      },
+      {
+        "label": "X-Access-Token",
+        "description": "Access token of the user<br/>(${initiator().accessToken or completer('taskDefinitionId').accessToken})",
+        "type": "String",
+        "binding": {
+          "type": "camunda:inputParameter",
+          "name": "x_access_token"
+        }
+      },
+      {
+        "label": "Result variable",
+        "description": "The process variable to put response to (transient)",
+        "type": "String",
+        "value": "response",
+        "binding": {
+          "type": "camunda:outputParameter",
+          "source": "${ response }"
+        },
+        "constraints": {
+          "notEmpty": true
+        }
+      }
+    ]
+  },
+  {
+    "name": "Get Certificate By Birthdate",
+    "id": "getCertificateByBirthdateDracsRegistryDelegate",
+    "appliesTo": [
+      "bpmn:ServiceTask"
+    ],
+    "properties": [
+      {
+        "label": "Implementation Type",
+        "type": "Hidden",
+        "value": "${getCertificateByBirthdateDracsRegistryDelegate}",
+        "editable": false,
+        "binding": {
+          "type": "property",
+          "name": "camunda:delegateExpression"
+        }
+      },
+      {
+        "label": "Certificate Number",
+        "type": "String",
+        "binding": {
+          "type": "camunda:inputParameter",
+          "name": "certNumber"
+        },
+        "constraints": {
+          "notEmpty": true
+        }
+      },
+      {
+        "label": "Certificate Serial",
+        "type": "String",
+        "binding": {
+          "type": "camunda:inputParameter",
+          "name": "certSerial"
+        },
+        "constraints": {
+          "notEmpty": true
+        }
+      },
+      {
+        "label": "Role",
+        "type": "Dropdown",
+        "value": "1",
+        "choices": [
+          {
+            "name": "CHILD",
+            "value": "1"
+          },
+          {
+            "name": "BRIDE",
+            "value": "2"
+          },
+          {
+            "name": "FIANCE",
+            "value": "3"
+          },
+          {
+            "name": "DEAD",
+            "value": "4"
+          },
+          {
+            "name": "HUSBAND",
+            "value": "5"
+          },
+          {
+            "name": "WIFE",
+            "value": "6"
+          },
+          {
+            "name": "APPLICANT",
+            "value": "7"
+          }
+        ],
+        "binding": {
+          "type": "camunda:inputParameter",
+          "name": "role"
+        }
+      },
+      {
+        "label": "Birth Year",
+        "type": "String",
+        "binding": {
+          "type": "camunda:inputParameter",
+          "name": "birthYear"
+        },
+        "constraints": {
+          "notEmpty": true
+        }
+      },
+      {
+        "label": "Birth Month",
+        "type": "String",
+        "binding": {
+          "type": "camunda:inputParameter",
+          "name": "birthMonth"
+        },
+        "constraints": {
+          "notEmpty": true
+        }
+      },
+      {
+        "label": "Birth Day",
+        "type": "String",
+        "binding": {
+          "type": "camunda:inputParameter",
+          "name": "birthDay"
+        },
+        "constraints": {
+          "notEmpty": true
+        }
+      },
+      {
+        "label": "Result variable",
+        "description": "The process variable to put response to (transient)",
+        "type": "String",
+        "value": "response",
+        "binding": {
+          "type": "camunda:outputParameter",
+          "source": "${ response }"
+        },
+        "constraints": {
+          "notEmpty": true
+        }
+      }
+    ]
+  },
+  {
+    "name": "Get Certificate By Name",
+    "id": "getCertificateByNameDracsRegistryDelegate",
+    "appliesTo": [
+      "bpmn:ServiceTask"
+    ],
+    "properties": [
+      {
+        "label": "Implementation Type",
+        "type": "Hidden",
+        "value": "${getCertificateByNameDracsRegistryDelegate}",
+        "editable": false,
+        "binding": {
+          "type": "property",
+          "name": "camunda:delegateExpression"
+        }
+      },
+      {
+        "label": "Certificate Number",
+        "type": "String",
+        "binding": {
+          "type": "camunda:inputParameter",
+          "name": "certNumber"
+        },
+        "constraints": {
+          "notEmpty": true
+        }
+      },
+      {
+        "label": "Certificate Serial",
+        "type": "String",
+        "binding": {
+          "type": "camunda:inputParameter",
+          "name": "certSerial"
+        },
+        "constraints": {
+          "notEmpty": true
+        }
+      },
+      {
+        "label": "Role",
+        "type": "Dropdown",
+        "value": "1",
+        "choices": [
+          {
+            "name": "CHILD",
+            "value": "1"
+          },
+          {
+            "name": "BRIDE",
+            "value": "2"
+          },
+          {
+            "name": "FIANCE",
+            "value": "3"
+          },
+          {
+            "name": "DEAD",
+            "value": "4"
+          },
+          {
+            "name": "HUSBAND",
+            "value": "5"
+          },
+          {
+            "name": "WIFE",
+            "value": "6"
+          },
+          {
+            "name": "APPLICANT",
+            "value": "7"
+          }
+        ],
+        "binding": {
+          "type": "camunda:inputParameter",
+          "name": "role"
+        }
+      },
+      {
+        "label": "Name",
+        "type": "String",
+        "binding": {
+          "type": "camunda:inputParameter",
+          "name": "name"
+        },
+        "constraints": {
+          "notEmpty": true
+        }
+      },
+      {
+        "label": "Surname",
+        "type": "String",
+        "binding": {
+          "type": "camunda:inputParameter",
+          "name": "surname"
+        },
+        "constraints": {
+          "notEmpty": true
+        }
+      },
+      {
+        "label": "Patronymic",
+        "type": "String",
+        "binding": {
+          "type": "camunda:inputParameter",
+          "name": "patronymic"
+        },
+        "constraints": {
+          "notEmpty": true
+        }
+      },
+      {
+        "label": "Result variable",
+        "description": "The process variable to put response to (transient)",
+        "type": "String",
+        "value": "response",
+        "binding": {
+          "type": "camunda:outputParameter",
+          "source": "${ response }"
+        },
+        "constraints": {
+          "notEmpty": true
+        }
+      }
+    ]
+  },
+  {
+    "name": "Get citizen users by attributes from keycloak",
+    "id": "keycloakGetCitizenUsersByAttributesConnectorDelegate",
+    "appliesTo": [
+      "bpmn:ServiceTask"
+    ],
+    "properties": [
+      {
+        "label": "Implementation Type",
+        "type": "Hidden",
+        "value": "${keycloakGetCitizenUsersByAttributesConnectorDelegate}",
+        "editable": false,
+        "binding": {
+          "type": "property",
+          "name": "camunda:delegateExpression"
+        }
+      },
+      {
+        "label": "Edrpou attribute value (required)",
+        "description": "Keycloak edrpou attribute value.",
+        "type": "String",
+        "binding": {
+          "type": "camunda:inputParameter",
+          "name": "edrpou"
+        },
+        "constraints": {
+          "notEmpty": true
+        }
+      },
+      {
+        "label": "Drfo attribute value (optional)",
+        "description": "Keycloak drfo attribute value. Don't participate in filtration if not specified.",
+        "type": "String",
+        "binding": {
+          "type": "camunda:inputParameter",
+          "name": "drfo"
+        }
+      },
+      {
+        "label": "Result variable",
+        "description": "The process variable to put the list of users",
+        "type": "String",
+        "value": "usersByAttributes",
+        "binding": {
+          "type": "camunda:outputParameter",
+          "source": "${ usersByAttribute }"
+        },
+        "constraints": {
+          "notEmpty": true
+        }
+      }
+    ]
+  },
+  {
+    "name": "Get roles from keycloak",
+    "id": "getRolesFromKeycloak",
+    "appliesTo": [
+      "bpmn:ServiceTask"
+    ],
+    "properties": [
+      {
+        "label": "Implementation Type",
+        "type": "Hidden",
+        "value": "${keycloakGetRolesConnectorDelegate}",
+        "editable": false,
+        "binding": {
+          "type": "property",
+          "name": "camunda:delegateExpression"
+        }
+      },
+      {
+        "label": "Result variable",
+        "description": "The process variable to put the list of roles (transient)",
+        "type": "String",
+        "value": "rolesOutput",
+        "binding": {
+          "type": "camunda:outputParameter",
+          "source": "${ roles }"
+        },
+        "constraints": {
+          "notEmpty": true
+        }
+      }
+    ]
+  },
+  {
+    "name": "Get users by attributes from keycloak",
+    "id": "keycloakGetOfficerUsersByAttributesConnectorDelegate",
+    "appliesTo": [
+      "bpmn:ServiceTask"
+    ],
+    "properties": [
+      {
+        "label": "Implementation Type",
+        "type": "Hidden",
+        "value": "${keycloakGetOfficerUsersByAttributesConnectorDelegate}",
+        "editable": false,
+        "binding": {
+          "type": "property",
+          "name": "camunda:delegateExpression"
+        }
+      },
+      {
+        "label": "Edrpou attribute value (required)",
+        "description": "Keycloak edrpou attribute value.",
+        "type": "String",
+        "binding": {
+          "type": "camunda:inputParameter",
+          "name": "edrpou"
+        },
+        "constraints": {
+          "notEmpty": true
+        }
+      },
+      {
+        "label": "Drfo attribute value (optional)",
+        "description": "Keycloak drfo attribute value. Don't participate in filtration if not specified.",
+        "type": "String",
+        "binding": {
+          "type": "camunda:inputParameter",
+          "name": "drfo"
+        }
+      },
+      {
+        "label": "Result variable",
+        "description": "The process variable to put the list of users",
+        "type": "String",
+        "value": "usersByAttributes",
+        "binding": {
+          "type": "camunda:outputParameter",
+          "source": "${ usersByAttribute }"
+        },
+        "constraints": {
+          "notEmpty": true
+        }
+      }
+    ]
+  },
+  {
+    "name": "Get users by role from keycloak",
+    "id": "getUsersByRoleFromKeycloak",
+    "appliesTo": [
+      "bpmn:ServiceTask"
+    ],
+    "properties": [
+      {
+        "label": "Implementation Type",
+        "type": "Hidden",
+        "value": "${keycloakGetUsersConnectorDelegate}",
+        "editable": false,
+        "binding": {
+          "type": "property",
+          "name": "camunda:delegateExpression"
+        }
+      },
+      {
+        "label": "Role name (Optional)",
+      "description": "Keycloak role name. If not specified, defaults to 'officer'",
+        "type": "String",
+        "binding": {
+          "type": "camunda:inputParameter",
+          "name": "role_name"
+        }
+      },
+      {
+        "label": "Result variable",
+        "description": "The process variable to put the list of users (transient)",
+        "type": "String",
+        "value": "usersOutput",
+        "binding": {
+          "type": "camunda:outputParameter",
+          "source": "${ usersByRole }"
+        },
+        "constraints": {
+          "notEmpty": true
+        }
+      }
+    ]
+  },
+  {
+    "name": "Idp Exchange Service Registry Connector",
+    "id": "idpExchangeServiceRegistryConnector",
+    "appliesTo": [
+      "bpmn:ServiceTask"
+    ],
+    "properties": [
+      {
+        "label": "Implementation Type",
+        "type": "Hidden",
+        "value": "${idpExchangeServiceRegistryConnector}",
+        "editable": false,
+        "binding": {
+          "type": "property",
+          "name": "camunda:delegateExpression"
+        }
+      },
+      {
+        "label": "Url",
+        "description": "Url of the resource. (String)",
+        "type": "String",
+        "binding": {
+          "type": "camunda:inputParameter",
+          "name": "url"
+        },
+        "constraints": {
+          "notEmpty": true
+        }
+      },
+      {
+        "label": "Method",
+        "description": "HTTP method. (String)",
+        "type": "String",
+        "binding": {
+          "type": "camunda:inputParameter",
+          "name": "method"
+        },
+        "constraints": {
+          "notEmpty": true
+        }
+      },
+      {
+        "label": "Body",
+        "description": "Request body",
+        "type": "String",
+        "binding": {
+          "type": "camunda:inputParameter",
+          "name": "body"
+        }
+      },
+      {
+        "label": "Result variable",
+        "description": "The process variable to put response to (transient)",
+        "value": "response",
+        "type": "String",
+        "binding": {
+          "type": "camunda:outputParameter",
+          "source": "${ response }"
+        },
+        "constraints": {
+          "notEmpty": true
+        }
+      }
+    ]
+  },
+  {
+    "name": "Get extended officer users by attributes from keycloak",
+    "id": "keycloakGetExtendedOfficerUsersByAttributesConnectorDelegate",
+    "appliesTo": [
+      "bpmn:ServiceTask"
+    ],
+    "properties": [
+      {
+        "label": "Implementation Type",
+        "type": "Hidden",
+        "value": "${keycloakGetExtendedOfficerUsersByAttributesConnectorDelegate}",
+        "editable": false,
+        "binding": {
+          "type": "property",
+          "name": "camunda:delegateExpression"
+        }
+      },
+      {
+        "label": "Attributes (required)",
+        "description": "Map of the attributes for search, structure example: {'name': 'value'}",
+        "type": "String",
+        "binding": {
+          "type": "camunda:inputParameter",
+          "name": "attributes"
+        },
+        "constraints": {
+          "notEmpty": true
+        }
+      },
+      {
+        "label": "Result variable",
+        "description": "The process variable to put the list of users",
+        "type": "String",
+        "value": "usersByAttributes",
+        "binding": {
+          "type": "camunda:outputParameter",
+          "source": "${ usersByAttribute }"
+        },
+        "constraints": {
+          "notEmpty": true
+        }
+      }
+    ]
+  },
+  {
+    "name": "Get officer users from Keycloak by attributes (inverse start with, equals) ",
+    "id": "keycloakGetOfficerUsersByAttributesEqualsAndStartWith",
+    "appliesTo": [
+      "bpmn:ServiceTask"
+    ],
+    "properties": [
+      {
+        "label": "Implementation Type",
+        "type": "Hidden",
+        "value": "${keycloakGetOfficerUsersByAttributesEqualsAndStartWith}",
+        "editable": false,
+        "binding": {
+          "type": "property",
+          "name": "camunda:delegateExpression"
+        }
+      },
+      {
+        "label": "Attributes Equals",
+        "description": "Map of the attributes for search, structure example: {'name': 'value'}",
+        "type": "String",
+        "binding": {
+          "type": "camunda:inputParameter",
+          "name": "attributesEquals"
+        }
+      },
+      {
+        "label": "Attributes Inverse Start With",
+        "description": "Map of the attributes for search by inverse start with, structure example: {name: [value1, value2]}.<br/>How inverse start with works: inputAttributes.startsWith(attributeInKeycloak)",
+        "type": "String",
+        "binding": {
+          "type": "camunda:inputParameter",
+          "name": "attributesStartWith"
+        }
+      },
+      {
+        "label": "Result variable",
+        "description": "The process variable to put the list of users",
+        "type": "String",
+        "value": "usersByAttributes",
+        "binding": {
+          "type": "camunda:outputParameter",
+          "source": "${ usersByAttribute }"
+        },
+        "constraints": {
+          "notEmpty": true
+        }
+      }
+    ]
+  },
+  {
+    "name": "Save Officer Attribute To Keycloak",
+    "id": "keycloakSaveOfficerAttributeDelegate",
+    "appliesTo": [
+      "bpmn:ServiceTask"
+    ],
+    "properties": [
+      {
+        "label": "Implementation Type",
+        "type": "Hidden",
+        "value": "${keycloakSaveOfficerAttributeDelegate}",
+        "editable": false,
+        "binding": {
+          "type": "property",
+          "name": "camunda:delegateExpression"
+        }
+      },
+      {
+        "label": "Username",
+        "description": "Keycloak username.",
+        "type": "String",
+        "binding": {
+          "type": "camunda:inputParameter",
+          "name": "username"
+        },
+        "constraints": {
+          "notEmpty": true
+        }
+      },
+      {
+        "label": "Attribute Name",
+        "description": "Attribute name to add.",
+        "type": "String",
+        "binding": {
+          "type": "camunda:inputParameter",
+          "name": "attributeName"
+        },
+        "constraints": {
+          "notEmpty": true
+        }
+      },
+      {
+        "label": "Attribute Values",
+        "description": "Attribute Values must be presented as list",
+        "type": "String",
+        "binding": {
+          "type": "camunda:inputParameter",
+          "name": "attributeValue"
+        },
+        "constraints": {
+          "notEmpty": true
+        }
+      }
+    ]
+  },
+  {
+    "name": "[DEPRECATED] Put content to Ceph",
+    "id": "putContentToCephDelegate",
+    "appliesTo": [
+      "bpmn:ServiceTask"
+    ],
+    "properties": [
+      {
+        "label": "Implementation Type",
+        "type": "Hidden",
+        "value": "${putContentToCephDelegate}",
+        "editable": false,
+        "binding": {
+          "type": "property",
+          "name": "camunda:delegateExpression"
+        }
+      },
+      {
+        "label": "Ceph key",
+      "description": "Ceph document id",
+        "type": "String",
+        "binding": {
+          "type": "camunda:inputParameter",
+          "name": "key"
+        },
+        "constraints": {
+          "notEmpty": true
+        }
+      },
+      {
+        "label": "Content",
+        "description": "Ceph document",
+        "type": "String",
+        "binding": {
+          "type": "camunda:inputParameter",
+          "name": "content"
+        },
+        "constraints": {
+          "notEmpty": true
+        }
+      }
+    ]
+  },
+  {
+    "name": "[DEPRECATED] Put user task form data prepopulation to Ceph",
+    "id": "putFormDataToCephDelegate",
+    "appliesTo": [
+      "bpmn:ServiceTask"
+    ],
+    "properties": [
+      {
+        "label": "Implementation Type",
+        "type": "Hidden",
+        "value": "${putFormDataToCephDelegate}",
+        "editable": false,
+        "binding": {
+          "type": "property",
+          "name": "camunda:delegateExpression"
+        }
+      },
+      {
+        "label": "Task definition key",
+      "description": "The task definition id to put form data to",
+        "type": "String",
+        "binding": {
+          "type": "camunda:inputParameter",
+          "name": "taskDefinitionKey"
+        },
+        "constraints": {
+          "notEmpty": true
+        }
+      },
+      {
+        "label": "Form data prepopulation",
+        "description": "The form data prepopulation to put",
+        "type": "String",
+        "binding": {
+          "type": "camunda:inputParameter",
+          "name": "formData"
+        },
+        "constraints": {
+          "notEmpty": true
+        }
+      }
+    ]
+  },
+  {
+    "name": "[DEPRECATED] Read content from Ceph",
+    "id": "getContentFromCephDelegate",
+    "appliesTo": [
+      "bpmn:ServiceTask"
+    ],
+    "properties": [
+      {
+        "label": "Implementation Type",
+        "type": "Hidden",
+        "value": "${getContentFromCephDelegate}",
+        "editable": false,
+        "binding": {
+          "type": "property",
+          "name": "camunda:delegateExpression"
+        }
+      },
+      {
+        "label": "Ceph key",
+      "description": "Ceph document id",
+        "type": "String",
+        "binding": {
+          "type": "camunda:inputParameter",
+          "name": "key"
+        },
+        "constraints": {
+          "notEmpty": true
+        }
+      },
+      {
+        "label": "Result variable",
+        "description": "The process variable to put content to (transient)",
+        "type": "String",
+        "value": "content",
+        "binding": {
+          "type": "camunda:outputParameter",
+          "source": "${ content }"
+        },
+        "constraints": {
+          "notEmpty": true
+        }
+      }
+    ]
+  },
+  {
+    "name": "[DEPRECATED] Read user task form data from Ceph",
+    "id": "getFormDataFromCephDelegate",
+    "appliesTo": [
+      "bpmn:ServiceTask"
+    ],
+    "properties": [
+      {
+        "label": "Implementation Type",
+        "type": "Hidden",
+        "value": "${getFormDataFromCephDelegate}",
+        "editable": false,
+        "binding": {
+          "type": "property",
+          "name": "camunda:delegateExpression"
+        }
+      },
+      {
+        "label": "Task definition key",
+      "description": "The task definition id to read form data from",
+        "type": "String",
+        "binding": {
+          "type": "camunda:inputParameter",
+          "name": "taskDefinitionKey"
+        },
+        "constraints": {
+          "notEmpty": true
+        }
+      },
+      {
+        "label": "Result variable",
+        "description": "The process variable to put form data to (transient)",
+        "type": "String",
+        "value": "formDataOutput",
+        "binding": {
+          "type": "camunda:outputParameter",
+          "source": "${ formData }"
+        },
+        "constraints": {
+          "notEmpty": true
+        }
+      }
+    ]
+  },
+  {
+    "name": "[DEPRECATED] Read start form data from Ceph",
+    "id": "getStartFormDataFromCephDelegate",
+    "appliesTo": [
+      "bpmn:ServiceTask"
+    ],
+    "properties": [
+      {
+        "label": "Implementation Type",
+        "type": "Hidden",
+        "value": "${getStartFormDataFromCephDelegate}",
+        "editable": false,
+        "binding": {
+          "type": "property",
+          "name": "camunda:delegateExpression"
+        }
+      },
+      {
+        "label": "Result variable",
+        "description": "The process variable to put form data to (transient)",
+        "type": "String",
+        "value": "startFormData",
+        "binding": {
+          "type": "camunda:outputParameter",
+          "source": "${ formData }"
+        },
+        "constraints": {
+          "notEmpty": true
+        }
+      }
+    ]
+  },
+  {
+    "name": "Remove role from keycloak user",
+    "id": "removeRoleFromKeycloakUser",
+    "appliesTo": [
+      "bpmn:ServiceTask"
+    ],
+    "properties": [
+      {
+        "label": "Implementation Type",
+        "type": "Hidden",
+        "value": "${keycloakRemoveRoleConnectorDelegate}",
+        "editable": false,
+        "binding": {
+          "type": "property",
+          "name": "camunda:delegateExpression"
+        }
+      },
+      {
+        "label": "User name",
+      "description": "Keycloak user name",
+        "type": "String",
+        "binding": {
+          "type": "camunda:inputParameter",
+          "name": "user_name"
+        },
+        "constraints": {
+          "notEmpty": true
+        }
+      },
+      {
+        "label": "Role",
+        "description": "Keycloak role",
+        "type": "String",
+        "binding": {
+          "type": "camunda:inputParameter",
+          "name": "role"
+        },
+        "constraints": {
+          "notEmpty": true
+        }
+      }
+    ]
+  },
+  {
+    "name": "Search Subjects Edr Registry",
+    "id": "searchSubjectsEdrRegistryConnectorDelegate",
+    "appliesTo": [
+      "bpmn:ServiceTask"
+    ],
+    "properties": [
+      {
+        "label": "Implementation Type",
+        "type": "Hidden",
+        "value": "${searchSubjectsEdrRegistryConnectorDelegate}",
+        "editable": false,
+        "binding": {
+          "type": "property",
+          "name": "camunda:delegateExpression"
+        }
+      },
+      {
+        "label": "Authorization Token",
+        "type": "String",
+        "binding": {
+          "type": "camunda:inputParameter",
+          "name": "authorizationToken"
+        },
+        "constraints": {
+          "notEmpty": true
+        }
+      },
+      {
+        "label": "Code",
+        "description": "???????????? ?????? ?????????????????? ???????? ?????? ?????? ?????? ???????????????? ?????????? (Optional)",
+        "type": "String",
+        "binding": {
+          "type": "camunda:inputParameter",
+          "name": "code"
+        },
+        "constraints": {
+          "notEmpty": true
+        }
+      },
+      {
+        "label": "Result variable",
+        "description": "The process variable to put response to (transient)",
+        "type": "String",
+        "value": "response",
+        "binding": {
+          "type": "camunda:outputParameter",
+          "source": "${ response }"
+        },
+        "constraints": {
+          "notEmpty": true
+        }
+      }
+    ]
+  },
+  {
+    "$schema": "https://unpkg.com/@camunda/element-templates-json-schema/resources/schema.json",
+    "name": "Send User Notification",
+    "id": "sendUserNotification",
+    "appliesTo": [
+      "bpmn:SendTask"
+    ],
+    "properties": [
+      {
+        "label": "Implementation Type",
+        "type": "Hidden",
+        "value": "${sendUserNotificationDelegate}",
+        "editable": false,
+        "binding": {
+          "type": "property",
+          "name": "camunda:delegateExpression"
+        }
+      },
+      {
+        "label": "Recipient",
+        "description": "Notification recipient username <br/>(${initiator().userName or completer('taskDefinitionId').userName})",
+        "type": "String",
+        "binding": {
+          "type": "camunda:inputParameter",
+          "name": "notificationRecipient"
+        },
+        "constraints": {
+          "notEmpty": true
+        }
+      },
+      {
+        "label": "Subject",
+        "description": "Notification subject",
+        "type": "String",
+        "binding": {
+          "type": "camunda:inputParameter",
+          "name": "notificationSubject"
+        },
+        "constraints": {
+          "notEmpty": true
+        }
+      },
+      {
+        "label": "Notification message template",
+        "description": "Notification message template <br/>(<registry-regulation>/notifications/<channel>/<template_name>/*.*)",
+        "type": "String",
+        "binding": {
+          "type": "camunda:inputParameter",
+          "name": "notificationTemplate"
+        },
+        "constraints": {
+          "notEmpty": true
+        }
+      },
+      {
+        "label": "Notification template model",
+        "description": "Notification template model <br/>(${templateModel} variable to be used for template processing)",
+        "type": "String",
+        "binding": {
+          "type": "camunda:inputParameter",
+          "name": "notificationTemplateModel"
+        },
+        "constraints": {
+          "notEmpty": true
+        }
+      }
+    ]
+  },
+  {
+    "$schema": "https://unpkg.com/@camunda/element-templates-json-schema/resources/schema.json",
+    "name": "Send User Notification V2",
+    "id": "sendUserNotificationV2",
+    "appliesTo": [
+      "bpmn:SendTask"
+    ],
+    "properties": [
+      {
+        "label": "Implementation Type",
+        "type": "Hidden",
+        "value": "${sendUserNotificationDelegate}",
+        "editable": false,
+        "binding": {
+          "type": "property",
+          "name": "camunda:delegateExpression"
+        }
+      },
+      {
+        "label": "Recipient",
+        "description": "Notification recipient username <br/>(${initiator().userName or completer('taskDefinitionId').userName})",
+        "type": "String",
+        "binding": {
+          "type": "camunda:inputParameter",
+          "name": "notificationRecipient"
+        },
+        "constraints": {
+          "notEmpty": true
+        }
+      },
+      {
+        "label": "Notification message template",
+        "description": "Notification message template <br/>(<registry-regulation>/notifications/<channel>/<template_name>/*.*)",
+        "type": "String",
+        "binding": {
+          "type": "camunda:inputParameter",
+          "name": "notificationTemplate"
+        },
+        "constraints": {
+          "notEmpty": true
+        }
+      },
+      {
+        "label": "Notification template model",
+        "description": "Notification template model <br/>(${templateModel} variable to be used for template processing)",
+        "type": "String",
+        "binding": {
+          "type": "camunda:inputParameter",
+          "name": "notificationTemplateModel"
+        },
+        "constraints": {
+          "notEmpty": true
+        }
+      }
+    ]
+  },
+  {
+    "name": "Get Subject Detail Edr Registry",
+    "id": "subjectDetailEdrRegistryConnectorDelegate",
+    "appliesTo": [
+      "bpmn:ServiceTask"
+    ],
+    "properties": [
+      {
+        "label": "Implementation Type",
+        "type": "Hidden",
+        "value": "${subjectDetailEdrRegistryConnectorDelegate}",
+        "editable": false,
+        "binding": {
+          "type": "property",
+          "name": "camunda:delegateExpression"
+        }
+      },
+      {
+        "label": "Authorization Token",
+        "type": "String",
+        "binding": {
+          "type": "camunda:inputParameter",
+          "name": "authorizationToken"
+        },
+        "constraints": {
+          "notEmpty": true
+        }
+      },
+      {
+        "label": "Id",
+        "description": "Subject Id",
+        "type": "String",
+        "binding": {
+          "type": "camunda:inputParameter",
+          "name": "id"
+        },
+        "constraints": {
+          "notEmpty": true
+        }
+      },
+      {
+        "label": "Result variable",
+        "description": "The process variable to put response to (transient)",
+        "type": "String",
+        "value": "response",
+        "binding": {
+          "type": "camunda:outputParameter",
+          "source": "${ response }"
+        },
+        "constraints": {
+          "notEmpty": true
+        }
+      }
+    ]
+  },
+  {
+    "name":"[DEPRECATED] System digital signature",
+    "id":"systemDigitalSignatureCallActivity",
+    "appliesTo":[
+        "bpmn:CallActivity"
+    ],
+    "properties":[
+        {
+          "label":"Called Process",
+          "type":"Hidden",
+          "editable":false,
+          "value":"system-signature-bp",
+          "binding":{
+              "type":"property",
+              "name":"calledElement"
+          }
+        },
+        {
+          "label":"Input data",
+          "description":"Input data to sign <br/>${payload)",
+          "type":"String",
+          "binding":{
+              "type":"camunda:in",
+              "target":"dataToSign",
+              "expression": true
+          },
+          "constraints":{
+              "notEmpty":true
+          }
+        },
+        {
+          "label":"Output variable name",
+          "description":"Variable name with system signature key",
+          "type":"String",
+          "binding":{
+              "type":"camunda:out",
+              "source":"system_signature_ceph_key"
+          },
+          "constraints":{
+              "notEmpty":true
+          }
+        }
+    ]
+  },
+  {
+    "name": "Throw validation error",
+    "id": "userDataValidationErrorDelegate",
+    "appliesTo": [
+      "bpmn:ServiceTask"
+    ],
+    "properties": [
+      {
+        "label": "Implementation Type",
+        "type": "Hidden",
+        "value": "${userDataValidationErrorDelegate}",
+        "editable": false,
+        "binding": {
+          "type": "property",
+          "name": "camunda:delegateExpression"
+        }
+      },
+      {
+        "label": "Validation errors",
+      "description": "Format is { \"field\": \"someField\", \"value\": \"someValue\", \"message\": \"someMessage\"}}",
+        "binding": {
+          "type": "camunda:inputParameter",
+          "name": "validationErrors"
+        }
+      }
+    ]
+  },
+  {
+    "name": "Read user settings",
+    "id": "userSettingsConnectorReadDelegate",
+    "appliesTo": [
+      "bpmn:ServiceTask"
+    ],
+    "properties": [
+      {
+        "label": "Implementation Type",
+        "type": "Hidden",
+        "value": "${userSettingsConnectorReadDelegate}",
+        "editable": false,
+        "binding": {
+          "type": "property",
+          "name": "camunda:delegateExpression"
+        }
+      },
+      {
+        "label": "X-Access-Token",
+        "description": "Access token of the user<br/>(${initiator().accessToken or completer('taskDefinitionId').accessToken})",
+        "type": "String",
+        "binding": {
+          "type": "camunda:inputParameter",
+          "name": "x_access_token"
+        },
+        "constraints": {
+          "notEmpty": true
+        }
+      },
+      {
+        "label": "Result variable",
+        "description": "The process variable to put response to (transient)",
+        "type": "String",
+        "value": "response",
+        "binding": {
+          "type": "camunda:outputParameter",
+          "source": "${ response }"
+        },
+        "constraints": {
+          "notEmpty": true
+        }
+      }
+    ]
+  },
+  {
+    "name": "[DEPRECATED] Create or Update user settings",
+    "id": "userSettingsConnectorUpdateDelegate",
+    "appliesTo": [
+      "bpmn:ServiceTask"
+    ],
+    "properties": [
+      {
+        "label": "Implementation Type",
+        "type": "Hidden",
+        "value": "${userSettingsConnectorUpdateDelegate}",
+        "editable": false,
+        "binding": {
+          "type": "property",
+          "name": "camunda:delegateExpression"
+        }
+      },
+      {
+        "label": "Payload",
+        "description": "Request body",
+        "type": "String",
+        "binding": {
+          "type": "camunda:inputParameter",
+          "name": "payload"
+        },
+        "constraints": {
+          "notEmpty": true
+        }
+      },
+      {
+        "label": "X-Access-Token",
+        "description": "Access token of the user<br/>(${initiator().accessToken or completer('taskDefinitionId').accessToken})",
+        "type": "String",
+        "binding": {
+          "type": "camunda:inputParameter",
+          "name": "x_access_token"
+        },
+        "constraints": {
+          "notEmpty": true
+        }
+      },
+      {
+        "label": "Result variable",
+        "description": "The process variable to put response to (transient)",
+        "type": "String",
+        "value": "response",
+        "binding": {
+          "type": "camunda:outputParameter",
+          "source": "${ response }"
+        },
+        "constraints": {
+          "notEmpty": true
+        }
+      }
+    ]
+  },
+  {
+    "name": "User form",
+    "id": "formUserTaskTemplate",
+    "appliesTo": [
+      "bpmn:UserTask"
+    ],
+    "properties": [
+      {
+        "label": "Form key",
+        "type": "String",
+        "binding": {
+          "type": "property",
+          "name": "camunda:formKey"
+        },
+        "constraints": {
+          "notEmpty": true
+        }
+      },
+      {
+        "label": "Assignee",
+        "value": "${initiator}",
+        "type": "String",
+        "binding": {
+          "type": "property",
+          "name": "camunda:assignee"
+        }
+      },
+      {
+        "label": "Candidate users",
+        "type": "String",
+        "binding": {
+          "type": "property",
+          "name": "camunda:candidateUsers"
+        }
+      },
+      {
+        "label": "Candidate roles",
+        "type": "String",
+        "binding": {
+          "type": "property",
+          "name": "camunda:candidateGroups"
+        }
+      },
+      {
+        "label": "Form data pre-population",
+        "description": "Value of the form data that will be pre-populated on user form<br/>e.g. ${formData} where formData is a variable with Spin JSON document of form ( S(map, 'application/json') )",
+        "type": "String",
+        "binding": {
+          "type": "camunda:inputParameter",
+          "name": "userTaskInputFormDataPrepopulate"
+        }
+      },
+      {
+        "label": "Form variables",
+        "description": "Form variables that will be accessed by the form",
+        "type": "String",
+        "binding": {
+          "type": "camunda:property",
+          "name": "formVariables"
+        }
+      }
+    ]
+}
+]

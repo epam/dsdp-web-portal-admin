@@ -1,0 +1,16 @@
+import { shallow } from 'enzyme';
+import React from 'react';
+
+import InlineButton from '#web-components/components/InlineButton/InlineButton';
+import NewGroupControl from '../NewGroupControl';
+
+describe('NewGroupControl', () => {
+  const props = {
+    existingGroupNames: [],
+    onAdd: () => vi.fn(),
+  };
+  it('should render component NewGroupControl', () => {
+    const wrapper = shallow(<NewGroupControl {...props} />);
+    expect(wrapper.find(InlineButton)).toBeTruthy();
+  });
+});

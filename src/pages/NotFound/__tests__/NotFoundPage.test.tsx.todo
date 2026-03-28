@@ -1,0 +1,13 @@
+import React from 'react';
+import StandardLayout from 'components/Layouts/Standard';
+import { notFoundErrorProps } from 'constants/errorProps';
+import { shallow } from 'enzyme';
+import NotFoundPage from '../NotFoundPage';
+
+describe('NotFoundPage', () => {
+  it('should render StandardLayout component', () => {
+    const wrapper = shallow(<NotFoundPage />);
+    expect(wrapper.find(StandardLayout)).toBeTruthy();
+    expect(wrapper.find(StandardLayout).props().error).toEqual(notFoundErrorProps());
+  });
+});

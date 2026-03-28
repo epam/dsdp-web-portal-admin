@@ -1,0 +1,44 @@
+import React from 'react';
+import { shallow } from 'enzyme';
+import { Switch } from 'react-router';
+import ErrorPage from 'pages/Error';
+import useAuthentication from 'hooks/useAuthentication';
+import useVersion from 'hooks/useVersion';
+import Loader from 'components/Loader';
+import Routes from '../Routes';
+
+vi.mock('hooks/useAuthentication', () => vi.fn());
+vi.mock('react-redux', () => {
+  const redux = vi.requireActual('react-redux');
+  return {
+    ...redux,
+    useDispatch: vi.fn(),
+  };
+});
+vi.mock('hooks/useVersion', () => vi.fn());
+
+const useAuthenticationMock = vi.mocked(useAuthentication);
+const useVersionMock = vi.mocked(useVersion);
+
+describe('Routes', () => {
+  beforeEach(() => {
+    useVersionMock.mockReturnValue({ versionId: ':versionId' });
+  });
+  it('should show loader if not initialized', () => {
+    useAuthenticationMock.mockReturnValue({ initialized: false });
+    const routes = shallow(<Routes />);
+    expect(routes.find(Loader).prop('show')).toEqual(true);
+  });
+
+  it('should render error layout if error is present', () => {
+    useAuthenticationMock.mockReturnValue({ initialized: true, error: {} });
+    const routes = shallow(<Routes />);
+    expect(routes.find(ErrorPage)).toHaveLength(1);
+  });
+
+  it('should render all routes', () => {
+    useAuthenticationMock.mockReturnValue({ initialized: true });
+    const routes = shallow(<Routes />);
+    expect(routes.find(Switch)).toHaveLength(1);
+  });
+});

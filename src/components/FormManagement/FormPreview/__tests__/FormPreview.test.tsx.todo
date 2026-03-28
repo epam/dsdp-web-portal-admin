@@ -1,0 +1,48 @@
+import React from 'react';
+import { shallow } from 'enzyme';
+import { useFormContext } from 'react-hook-form';
+import FormInvalidJson from 'components/FormManagement/FormInvalidJson';
+
+import Form from '#web-components/components/Form';
+import FormPreview from '../FormPreview';
+
+const useFormContextMock = vi.mocked(useFormContext);
+
+vi.mock('react-hook-form', () => {
+  return {
+    useFormContext: vi.fn(),
+  };
+});
+
+vi.mock('react-i18next', () => {
+  const i18nReact = vi.requireActual('react-i18next');
+  return {
+    ...i18nReact,
+    useTranslation: () => ({
+      t: vi.fn(),
+      i18n: { getResourceBundle: vi.fn(), getFixedT: vi.fn(), t: vi.fn() },
+    }),
+  };
+});
+
+describe('FormPreview', () => {
+  const register = vi.fn();
+  const setValue = vi.fn();
+  const getValues = vi.fn();
+
+  beforeEach(() => {
+    useFormContextMock.mockReturnValue({ register, setValue, getValues });
+  });
+
+  it('should render Form', () => {
+    getValues.mockReturnValue({ formSchema: {} });
+    const wrapper = shallow(<FormPreview />);
+    expect(wrapper.find(Form).exists()).toBeTruthy();
+  });
+
+  it('should render FormInvalidJson', () => {
+    getValues.mockReturnValue({ formSchema: {}, jsonSchemeIsInValid: true });
+    const wrapper = shallow(<FormPreview />);
+    expect(wrapper.find(FormInvalidJson).exists()).toBeTruthy();
+  });
+});

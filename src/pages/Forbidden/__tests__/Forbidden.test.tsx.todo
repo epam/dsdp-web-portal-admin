@@ -1,0 +1,13 @@
+import ErrorLayout from 'components/Layouts/Error';
+import { forbiddenErrorProps } from 'constants/errorProps';
+import { shallow } from 'enzyme';
+import React from 'react';
+
+import Forbidden from '../Forbidden';
+
+describe('Forbidden', () => {
+  it('should render standardLayout with error', () => {
+    const wrapper = shallow(<Forbidden />);
+    expect(wrapper.find(ErrorLayout).props()).toMatchObject({ error: forbiddenErrorProps() });
+  });
+});

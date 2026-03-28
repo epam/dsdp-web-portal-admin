@@ -1,0 +1,90 @@
+import React from 'react';
+import { shallow } from 'enzyme';
+import { useParams } from 'react-router';
+import { useDispatch, useSelector } from 'react-redux';
+
+import useQuery from 'hooks/useQuery';
+import useVersion from 'hooks/useVersion';
+import useEntityMode from 'hooks/useEntityMode';
+
+import TableFields from 'components/TableManagement/TableFields';
+import TableColumns from 'components/TableManagement/TableColumns';
+import TableIndexes from 'components/TableManagement/TableIndexes';
+import EditTablePage from '../EditTablePage';
+
+vi.mock('react-redux', () => {
+  const redux = vi.requireActual('react-redux');
+  return {
+    ...redux,
+    useSelector: vi.fn(),
+    useDispatch: vi.fn(),
+  };
+});
+
+vi.mock('react-router', () => {
+  return {
+    useParams: vi.fn(),
+    useHistory: () => ({
+      push: vi.fn(),
+    }),
+    useRouteMatch: vi.fn(),
+    useLocation: vi.fn(),
+  };
+});
+
+vi.mock('store/tables', () => {
+  const store = vi.requireActual('store/tables');
+  return {
+    ...store,
+    selectRegistryTable: vi.fn(),
+    selectTableEditPageIsLoading: vi.fn(),
+    selectRegistryTableIndexes: vi.fn(),
+  };
+});
+
+vi.mock('hooks/useVersion', () => vi.fn());
+
+vi.mock('hooks/useQuery', () => vi.fn());
+vi.mock('hooks/useEntityMode', () => vi.fn());
+
+const useParamsMock = vi.mocked(useParams);
+const useQueryMock = vi.mocked(useQuery);
+const useDispatchMock = vi.mocked(useDispatch);
+const useVersionMock = vi.mocked(useVersion);
+const useEntityModeMock = vi.mocked(useEntityMode);
+const useSelectorMock = vi.mocked(useSelector);
+
+describe('EditTablePage', () => {
+  const dispatch = vi.fn();
+  const testVersionId = 'versionId';
+  const testTableName = 'testTableName';
+
+  beforeEach(() => {
+    useSelectorMock.mockImplementation((fn) => fn());
+    useVersionMock.mockReturnValue({ versionId: testVersionId });
+    useParamsMock.mockReturnValue({ tableName: testTableName });
+    useQueryMock.mockReturnValue({
+      has: () => false,
+      get: () => null,
+    });
+    useDispatchMock.mockReturnValue(dispatch);
+  });
+
+  it('should include TableFields', () => {
+    useEntityModeMock.mockReturnValue('common');
+    const wrapper = shallow(<EditTablePage />);
+    expect(wrapper.find(TableFields).exists()).toBeTruthy();
+  });
+
+  it('should include TableColumns', () => {
+    useEntityModeMock.mockReturnValue('columns');
+    const wrapper = shallow(<EditTablePage />);
+    expect(wrapper.find(TableColumns).exists()).toBeTruthy();
+  });
+
+  it('should include TableIndexes', () => {
+    useEntityModeMock.mockReturnValue('indexes');
+    const wrapper = shallow(<EditTablePage />);
+    expect(wrapper.find(TableIndexes).exists()).toBeTruthy();
+  });
+});

@@ -1,0 +1,22 @@
+import { shallow } from 'enzyme';
+import React from 'react';
+import { useLocation } from 'react-router';
+import Tabs from '#web-components/components/Tabs';
+import EntityModeTabs from '../EntityModeTabs';
+
+vi.mock('react-router', () => {
+  return {
+    useLocation: vi.fn(),
+    useHistory: vi.fn(),
+  };
+});
+
+const useLocationMock = vi.mocked(useLocation);
+
+describe('EntityModeTabs', () => {
+  it('should render tabs', () => {
+    useLocationMock.mockReturnValue({ state: {} });
+    const wrapper = shallow(<EntityModeTabs entityName="testForm" modeName="testMode" tabs={[]} />);
+    expect(wrapper.find(Tabs).exists()).toBeTruthy();
+  });
+});

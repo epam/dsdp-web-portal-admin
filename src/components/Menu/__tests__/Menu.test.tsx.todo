@@ -1,0 +1,33 @@
+import React from 'react';
+import { shallow } from 'enzyme';
+import useAuthentication from 'hooks/useAuthentication';
+import DropdownMenu from '#web-components/components/DropdownMenu';
+import Menu from '../Menu';
+
+vi.mock('hooks/useAuthentication', () => vi.fn());
+
+vi.mock('react-redux', () => {
+  const redux = vi.requireActual('react-redux');
+  return {
+    ...redux,
+    useDispatch: vi.fn(),
+  };
+});
+
+const useAuthenticationMock = vi.mocked(useAuthentication);
+
+describe('Menu', () => {
+  const props: any = {};
+
+  it('should not render Menu if not authenticated', () => {
+    useAuthenticationMock.mockReturnValue({ authenticated: false });
+    const wrapper = shallow(<Menu {...props} />);
+    expect(wrapper).toEqual({});
+  });
+
+  it('should render DropdownMenu component if authenticated', () => {
+    useAuthenticationMock.mockReturnValue({ authenticated: true });
+    const wrapper = shallow(<Menu {...props} />);
+    expect(wrapper.find(DropdownMenu).length > 0).toBeTruthy();
+  });
+});

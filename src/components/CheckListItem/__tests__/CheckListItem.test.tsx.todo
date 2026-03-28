@@ -1,0 +1,77 @@
+import React from 'react';
+import { shallow } from 'enzyme';
+import { DoneIcon, ErrorIcon, SyncProblemIcon } from '#web-components/components/Icons';
+import Typography from '#web-components/components/Typography';
+import { VersionCheckResult } from 'types/versions';
+import CheckListItem from '../CheckListItem';
+
+describe('CheckListItem', () => {
+  it('should render error icon when status === error', () => {
+    const wrapper = shallow(
+      <CheckListItem
+        status={VersionCheckResult.FAILED}
+        failedMessage="errorMessage"
+        successMessage=""
+        pendingMessage=""
+      />,
+    );
+    expect(wrapper.find(ErrorIcon).exists()).toBeTruthy();
+  });
+  it('should show error message when status === error', () => {
+    const wrapper = shallow(
+      <CheckListItem
+        status={VersionCheckResult.FAILED}
+        failedMessage="errorMessage"
+        successMessage=""
+        pendingMessage=""
+      />,
+    );
+    expect(wrapper.find(Typography).prop('children')).toContain('errorMessage');
+  });
+  it('should render success icon when status === success', () => {
+    const wrapper = shallow(
+      <CheckListItem status={VersionCheckResult.SUCCESS} failedMessage="" successMessage="" pendingMessage="" />,
+    );
+    expect(wrapper.find(DoneIcon).exists()).toBeTruthy();
+  });
+  it('should show success message when status === success', () => {
+    const wrapper = shallow(
+      <CheckListItem
+        status={VersionCheckResult.SUCCESS}
+        failedMessage="errorMessage"
+        successMessage="success message"
+        pendingMessage=""
+      />,
+    );
+    expect(wrapper.find(Typography).prop('children')).toContain('success message');
+  });
+  it('should render syncProblem icon when status === notChecked', () => {
+    const wrapper = shallow(
+      <CheckListItem status={VersionCheckResult.PENDING} failedMessage="" successMessage="" pendingMessage="" />,
+    );
+    expect(wrapper.find(SyncProblemIcon).exists()).toBeTruthy();
+  });
+  it('should show notChecked message when status === notChecked', () => {
+    const wrapper = shallow(
+      <CheckListItem
+        status={VersionCheckResult.PENDING}
+        failedMessage="errorMessage"
+        successMessage="success message"
+        pendingMessage="not checked"
+      />,
+    );
+    expect(wrapper.find(Typography).prop('children')).toContain('not checked');
+  });
+  it('should show pending message and SyncIcon icon when status === pending', () => {
+    const wrapper = shallow(
+      <CheckListItem
+        status={VersionCheckResult.PENDING}
+        failedMessage="errorMessage"
+        successMessage="success message"
+        pendingMessage="pending message"
+      />,
+    );
+    expect(wrapper.find(Typography).prop('children')).toContain('pending message');
+    expect(wrapper.find(SyncProblemIcon).exists()).toBeTruthy();
+  });
+});

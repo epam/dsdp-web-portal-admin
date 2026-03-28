@@ -1,0 +1,100 @@
+import React from 'react';
+import { useLocation } from 'react-router';
+import { shallow } from 'enzyme';
+import { useSelector } from 'react-redux';
+import useVersion from 'hooks/useVersion';
+import { Version } from 'types/versions';
+import MenuItem from '#web-components/components/MenuList/components/MenuItem';
+import Button from '#web-components/components/Button';
+
+import VersionMenu from '../VersionMenu';
+
+vi.mock('react-redux', () => {
+  const redux = vi.requireActual('react-redux');
+  return {
+    ...redux,
+    useSelector: vi.fn(),
+    useDispatch: vi.fn(),
+  };
+});
+
+vi.mock('react', () => {
+  const react = vi.requireActual('react');
+  return {
+    ...react,
+    useState: vi.fn(),
+  };
+});
+
+vi.mock('hooks/useVersion', () => vi.fn());
+
+vi.mock('react-router', () => {
+  return {
+    useLocation: vi.fn(),
+  };
+});
+
+const useSelectorMock = vi.mocked(useSelector);
+const useStateMock = vi.mocked(React.useState);
+const useLocationMock = vi.mocked(useLocation);
+const useVersionMock = vi.mocked(useVersion);
+
+const setOpenMock = vi.fn();
+
+const versionsList: Version[] = [{ id: 'id', name: 'name', description: 'description' }];
+
+describe('VersionMenu', () => {
+  beforeEach(() => {
+    useSelectorMock.mockImplementation((fn) => fn());
+    useLocationMock.mockReturnValue({ pathname: '' });
+    useStateMock.mockReturnValue([false, setOpenMock]);
+  });
+  const props: any = { appTitle: 'title', dataXpath: { versionName: '' } };
+
+  it('should not render candidat versions if we have not it', () => {
+    useVersionMock.mockReturnValue({ versionId: ':versionId', versionsList: [], setVersion: () => null });
+    const wrapper = shallow(<VersionMenu {...props} />);
+    expect(wrapper.find(MenuItem).length === 1).toBeTruthy();
+  });
+
+  it('should render candidat versions', () => {
+    useVersionMock.mockReturnValue({ versionId: ':versionId', versionsList, setVersion: () => null });
+    const wrapper = shallow(<VersionMenu {...props} />);
+    expect(wrapper.find(MenuItem).length === 2).toBeTruthy();
+  });
+
+  it('should open dropdown by click on button', () => {
+    useVersionMock.mockReturnValue({ versionId: ':versionId', versionsList, setVersion: () => null });
+    const wrapper = shallow(<VersionMenu {...props} />);
+    expect(wrapper.find(Button).exists()).toBeTruthy();
+
+    const openButton = wrapper
+      .find(Button);
+    const onClick = openButton.prop('onClick');
+
+    if (onClick) {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      onClick();
+    }
+
+    expect(setOpenMock).toBeCalled();
+  });
+
+  it('should close dropdown by click on outside menu', () => {
+    useVersionMock.mockReturnValue({ versionId: ':versionId', versionsList, setVersion: () => null });
+    const wrapper = shallow(<VersionMenu {...props} />);
+
+    const menuItem = wrapper
+      .find(MenuItem).first();
+    const onClick = menuItem.prop('onClick');
+
+    if (onClick) {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      onClick();
+    }
+
+    expect(setOpenMock).toBeCalled();
+  });
+});

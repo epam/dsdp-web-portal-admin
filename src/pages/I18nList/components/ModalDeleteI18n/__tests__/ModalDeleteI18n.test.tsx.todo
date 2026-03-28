@@ -1,0 +1,17 @@
+import React from 'react';
+import { shallow } from 'enzyme';
+import Modal from '#web-components/components/Modal';
+import ModalDeleteI18n from '../ModalDeleteI18n';
+
+const props = {
+  isOpen: true,
+  onOpenChange: vi.fn(),
+  onDelete: vi.fn(),
+};
+
+describe('ModalDeleteI18n', () => {
+  it('should render Modal component', () => {
+    const wrapper = shallow(<ModalDeleteI18n {...props} />);
+    expect(wrapper.find(Modal).exists()).toBeTruthy();
+  });
+});
